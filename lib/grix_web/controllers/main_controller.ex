@@ -5,6 +5,7 @@ defmodule GrixWeb.MainController do
   alias Grix.Helpers
 
   def show(conn, _params) do
+    IO.inspect(conn.assigns, label: "assigns - main")
     render(conn, "main.html")
   end
 
