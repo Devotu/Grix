@@ -2,7 +2,6 @@ defmodule GrixWeb.LoginController do
   use GrixWeb, :controller
 
   alias Grix.Player
-  alias Grix.Helpers
 
   def show(conn, _params) do
     IO.inspect(conn.assigns, label: "assigns - login")
@@ -19,10 +18,14 @@ defmodule GrixWeb.LoginController do
         |> put_session(:player_id, player.id)
         |> IO.inspect(label: "post")
         |> redirect(to: Routes.main_path(conn, :show))
-      {:error, msg} ->
-        redirect(conn, to: Routes.login_path(conn, :show))
+      {:error, :not_found} ->
+        conn
+        |> put_flash(:error, "Username/password not found")
+        |> redirect(to: Routes.login_path(conn, :show))
       _ ->
-        redirect(conn, to: Routes.login_path(conn, :show))
+        conn
+        |> put_flash(:error, "Unknown error")
+        |> redirect(to: Routes.login_path(conn, :show))
     end
   end
 
