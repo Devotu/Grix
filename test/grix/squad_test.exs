@@ -6,7 +6,9 @@ defmodule GrixWeb.SquadTest do
     name = "Squad 3"
     faction = "fReb"
     archetype = "atAce"
-    assert {:ok, "sq3hash"} == Squad.create(name, faction, archetype)
+    {status, id} = Squad.create(name, faction, archetype)
+    assert :ok == status
+    assert 19 == String.length(id)
   end
 
   test "create squad - fail - missing name" do

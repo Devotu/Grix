@@ -1,7 +1,17 @@
 defmodule Grix.Helpers.Database do
+  alias Bolt.Sips, as: Bolt
+
+  def create(query, guid) do
+    run(query)
+    |> check_result_id(guid)
+  end
+
+  def get(query) do
+    run(query)
+  end
 
   def run(query) do
-
+    Bolt.query!(Bolt.conn, query)
   end
 
   def return_single_result_id(response) do

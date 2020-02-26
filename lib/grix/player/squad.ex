@@ -1,5 +1,4 @@
 defmodule Grix.Squad do
-  alias Bolt.Sips, as: Bolt
   alias Grix.Helpers.General, as: Helpers
   alias Grix.Helpers.Database
   alias Grix.Squad
@@ -20,11 +19,11 @@ defmodule Grix.Squad do
     CREATE
       (f)<-[:Belongs]-
       (sq:Squad {id:"#{guid}", name:"#{name}", created:TIMESTAMP()})
-      -[:Is]->(at);
+      -[:Is]->(at)
+    RETURN sq.id AS id;
     """
 
-    result = Bolt.query!(Bolt.conn, query)
-    Database.check_result_id(result, guid)
+    Database.create(query, guid)
   end
 
 
@@ -38,7 +37,7 @@ defmodule Grix.Squad do
       sq
     """
 
-    Bolt.query!(Bolt.conn, query)
+    Database.get(query)
     |> nodes_to_squads
     |> Helpers.return_expected_single
   end
