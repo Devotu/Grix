@@ -4,10 +4,10 @@
       Name: <%= text_input f, :name %>
     </label>
     <label>
-      Faction: <%= select(f, :faction, ["Rebel": "reb", "Empire": "emp", "Scum": "scm"]) %>
+      Faction: <%= select(f, :faction, ["Rebel": "fReb", "Empire": "fEmp", "Scum": "fScm"]) %>
     </label>
     <label>
-      Archetype: <%= select(f, :archetype, ["None": "none", "N of a kind": "nok", "Aces": "ace"]) %>
+      Archetype: <%= select(f, :archetype, ["None": "atNon", "N of a kind": "atNok", "Aces": "atAce", "Beef": "atBef"]) %>
     </label>
     <%= submit("Create", class: "button border do submit") %>
   <% end %>

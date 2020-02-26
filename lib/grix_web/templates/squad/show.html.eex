@@ -1,5 +1,6 @@
 <section>
-  <label>
-    Name: <%= @squad.name %>
-  </label>
+  <p><b>Id:</b> <%= @squad.id %>
+  <p><b>Name:</b> <%= @squad.name %>
+  <p><b>Archetype:</b> <%= @squad.archetype %>
+  <p><b>Faction:</b> <%= @squad.faction %>
 </section>

@@ -34,15 +34,23 @@ defmodule Grix.Squad do
   def get(id) do
     query = """
     MATCH
+      (f:Faction)<-[:Belongs]-
       (sq:Squad)
+      -[:Is]->(at:Archetype)
     WHERE
       sq.id = "#{id}"
     RETURN
-      sq
+      {
+        id: sq.id,
+        name: sq.name,
+        archetype: at.name,
+        faction: f.name
+      } AS squad
     """
 
     Database.get(query)
     |> nodes_to_squads
+    |> IO.inspect(label: "got")
     |> Helpers.return_expected_single
   end
 
@@ -52,10 +60,7 @@ defmodule Grix.Squad do
   end
 
   defp node_to_squad(node) do
-    squad_map =
-    node["sq"].properties
-    |> Helpers.atomize_keys
-
+    squad_map = Helpers.atomize_keys(node["squad"])
     struct(Squad, squad_map)
   end
 end
