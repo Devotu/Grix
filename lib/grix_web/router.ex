@@ -1,8 +1,6 @@
 defmodule GrixWeb.Router do
   use GrixWeb, :router
 
-  # alias Grix.Auth
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -27,6 +25,7 @@ defmodule GrixWeb.Router do
     get "/main", MainController, :show
 
     get "/squads", SquadController, :new
+    get "/squads/:id", SquadController, :show
     post "/squads", SquadController, :create
   end
 end

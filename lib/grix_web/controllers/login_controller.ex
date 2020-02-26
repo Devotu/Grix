@@ -4,7 +4,6 @@ defmodule GrixWeb.LoginController do
   alias Grix.Player
 
   def show(conn, _params) do
-    IO.inspect(conn.assigns, label: "assigns - login")
     render(conn, "login.html")
   end
 
@@ -16,7 +15,6 @@ defmodule GrixWeb.LoginController do
         conn
         |> assign(:player, player)
         |> put_session(:player_id, player.id)
-        |> IO.inspect(label: "post")
         |> redirect(to: Routes.main_path(conn, :show))
       {:error, :not_found} ->
         conn
