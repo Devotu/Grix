@@ -1,15 +1,15 @@
-defmodule Grix.Player do  
+defmodule Grix.Player do
   alias Bolt.Sips, as: Bolt
-  alias Grix.Helpers
+  alias Grix.Helpers.General, as: Helpers
   alias Grix.Player
 
-  defstruct id: "", name: "" 
+  defstruct id: "", name: ""
 
   def login(username, password) do
     query = """
-    MATCH 
+    MATCH
       (p:Player)
-    WHERE 
+    WHERE
       p.email = "#{username}"
       AND p.password = "#{password}"
     RETURN
@@ -24,9 +24,9 @@ defmodule Grix.Player do
 
   def get(id) do
     query = """
-    MATCH 
+    MATCH
       (p:Player)
-    WHERE 
+    WHERE
       p.id = "#{id}"
     RETURN
       p

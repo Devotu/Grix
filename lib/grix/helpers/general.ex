@@ -1,4 +1,19 @@
-defmodule Grix.Helpers do
+defmodule Grix.Helpers.General do
+
+  def generate_guid() do
+    1..4
+    |> Enum.map( fn(_x) -> generate_lower_case_sequence(4) end )
+    |> Enum.join("-")
+  end
+
+
+  defp generate_lower_case_sequence(len) do
+    1..len
+    |> Enum.map( fn(_x) -> <<Enum.random(97..122)>> end )
+    |> Enum.join
+  end
+
+
   @doc """
   Convert map string keys to :atom keys
   """
@@ -29,16 +44,6 @@ defmodule Grix.Helpers do
   end
 
 
-  def return_expected_matching_id(created_id, generated_id) do
-      case created_id == generated_id do
-      :true ->
-          { :ok, created_id }
-      :false ->
-          { :error, :insert_failure }
-    end
-  end
-
-
   def return_as_tuple({:error, msg}) do
     {:error, msg}
   end
@@ -50,13 +55,5 @@ defmodule Grix.Helpers do
 
   def return_id(%{} = map) do
     map.id
-  end
-
-
-  def return_result_id(response) do
-    %{results: result} = response
-    [ row ] = result
-    { created_id } = { row["id"] }
-    created_id
   end
 end
