@@ -6,6 +6,10 @@ defmodule Grix.Squad do
   defstruct id: "", name: "", archetype: "", faction: ""
 
 
+  def create("", _, _), do: {:error, :missing_parameter, "name"}
+  def create(_, "", _), do: {:error, :missing_parameter, "faction"}
+  def create(_, _, ""), do: {:error, :missing_parameter, "archetype"}
+
   def create(name, faction, archetype) do
 
     guid = Helpers.generate_guid()
