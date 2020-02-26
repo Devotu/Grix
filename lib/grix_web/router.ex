@@ -25,5 +25,8 @@ defmodule GrixWeb.Router do
     post "/login", LoginController, :login
 
     get "/main", MainController, :show
+
+    get "/squads", SquadController, :new
+    post "/squads", SquadController, :create
   end
 end

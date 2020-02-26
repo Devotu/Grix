@@ -1,3 +1,4 @@
 <section>
   <h4>Welcome <%=@player.name%></h4>
+  <%= button("New Squad", to: Routes.squad_path(@conn, :new), method: "get", class: "button border link-button") %>
 </section>

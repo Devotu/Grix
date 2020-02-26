@@ -1,0 +1,5 @@
+<section>
+  <label>
+    Name: <%= @squad.name %>
+  </label>
+</section>
