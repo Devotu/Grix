@@ -7,6 +7,19 @@ defmodule GrixWeb.SquadController do
     render(conn, "new.html")
   end
 
+  def index(conn, _params) do
+    case Squad.list() do
+      {:ok, list} ->
+        conn
+        |> assign(:squads, list)
+        |> render("list.html")
+      _ ->
+        conn
+        |> put_flash(:error, "?")
+        |> redirect(to: Routes.main_path(conn, :show))
+    end
+  end
+
   def show(conn, params) do
     case Squad.get(params["id"]) do
       {:ok, squad} ->

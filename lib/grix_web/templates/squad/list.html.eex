@@ -1,0 +1,5 @@
+<section>
+  <%= for squad <- @squads do %>
+    <p><b><%= squad.name %></b> (<%= squad.faction %>/<%= squad.archetype %>) <%= link "Show", to: Routes.squad_path(@conn, :show, squad.id) %>
+  <% end %>
+</section>
