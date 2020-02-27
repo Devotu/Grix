@@ -8,6 +8,7 @@ defmodule Grix.Helpers.Database do
 
   def get(query) do
     run(query)
+    |> IO.inspect(label: "got")
   end
 
   def run(query) do
@@ -37,4 +38,19 @@ defmodule Grix.Helpers.Database do
         { :error, :insert_failure }
     end
   end
+
+
+  def to_safe_json(nil), do: ""
+  def to_safe_json(json_string) when is_bitstring(json_string) do
+    String.replace(json_string, ~s("), "--")
+  end
+  def to_safe_json(_), do: ""
+
+
+
+  def from_safe_json(nil), do: ""
+  def from_safe_json(json_string) when is_bitstring(json_string) do
+    String.replace(json_string, "--", ~s("))
+  end
+  def from_safe_json(_), do: ""
 end

@@ -3,14 +3,14 @@ defmodule Grix.Squad do
   alias Grix.Helpers.Database
   alias Grix.Squad
 
-  defstruct id: "", name: "", archetype: "", faction: ""
+  defstruct id: "", name: "", archetype: "", faction: "", xws: ""
 
 
-  def create("", _, _), do: {:error, :missing_parameter, "name"}
-  def create(_, "", _), do: {:error, :missing_parameter, "faction"}
-  def create(_, _, ""), do: {:error, :missing_parameter, "archetype"}
+  def create("", _, _, _), do: {:error, :missing_parameter, "name"}
+  def create(_, "", _, _), do: {:error, :missing_parameter, "faction"}
+  def create(_, _, "", _), do: {:error, :missing_parameter, "archetype"}
 
-  def create(name, faction, archetype) do
+  def create(name, faction, archetype, xws) do
 
     guid = Helpers.generate_guid()
 
@@ -22,7 +22,7 @@ defmodule Grix.Squad do
       AND f.id = "#{faction}"
     CREATE
       (f)<-[:Belongs]-
-      (sq:Squad {id:"#{guid}", name:"#{name}", created:TIMESTAMP()})
+      (sq:Squad {id:"#{guid}", name:"#{name}", xws:"#{xws}", created:TIMESTAMP()})
       -[:Is]->(at)
     RETURN sq.id AS id;
     """
@@ -42,7 +42,8 @@ defmodule Grix.Squad do
         id: sq.id,
         name: sq.name,
         archetype: at.name,
-        faction: f.name
+        faction: f.name,
+        xws: sq.xws
       } AS squad
     """
 
@@ -66,13 +67,13 @@ defmodule Grix.Squad do
         id: sq.id,
         name: sq.name,
         archetype: at.name,
-        faction: f.name
+        faction: f.name,
+        xws: sq.xws
       } AS squad
     """
 
     Database.get(query)
     |> nodes_to_squads
-    |> IO.inspect(label: "got")
     |> Helpers.return_expected_single
   end
 
@@ -82,7 +83,8 @@ defmodule Grix.Squad do
   end
 
   defp node_to_squad(node) do
-    squad_map = Helpers.atomize_keys(node["squad"])
-    struct(Squad, squad_map)
+    data_map = Helpers.atomize_keys(node["squad"])
+    parsed_data_map = Map.put(data_map, :xws, Database.from_safe_json(data_map.xws))
+    struct(Squad, parsed_data_map)
   end
 end

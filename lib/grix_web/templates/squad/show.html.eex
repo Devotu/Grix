@@ -3,4 +3,5 @@
   <p><b>Name:</b> <%= @squad.name %>
   <p><b>Archetype:</b> <%= @squad.archetype %>
   <p><b>Faction:</b> <%= @squad.faction %>
+  <p><b>XWS:</b> <%= @squad.xws %>
 </section>

@@ -6,6 +6,7 @@ defmodule GrixWeb.SquadController do
   alias Grix.Archetype
 
   alias Grix.Helpers.Html
+  alias Grix.Helpers.Database
 
   def new(conn, _params) do
     {:ok, factions} = Faction.list()
@@ -49,7 +50,9 @@ defmodule GrixWeb.SquadController do
 
 
   def create(conn, params) do
-    case Squad.create(params["name"], params["faction"], params["archetype"]) do
+    xws = Database.to_safe_json(params["xws"])
+    IO.inspect(xws, label: "xws")
+    case Squad.create(params["name"], params["faction"], params["archetype"], xws) do
       {:ok, id} ->
         {:ok, squad} = Squad.get(id)
         conn
