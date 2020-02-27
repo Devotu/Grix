@@ -31,6 +31,28 @@ defmodule Grix.Squad do
   end
 
 
+  def list() do
+    query = """
+    MATCH
+      (f:Faction)<-[:Belongs]-
+      (sq:Squad)
+      -[:Is]->(at:Archetype)
+    RETURN
+      {
+        id: sq.id,
+        name: sq.name,
+        archetype: at.name,
+        faction: f.name
+      } AS squad
+    """
+
+    Database.get(query)
+    |> nodes_to_squads
+    |> IO.inspect(label: "got")
+    |> Helpers.return_as_tuple()
+  end
+
+
   def get(id) do
     query = """
     MATCH

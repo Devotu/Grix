@@ -18,8 +18,23 @@ defmodule GrixWeb.SquadTest do
     assert {:error, :missing_parameter, "name"} == Squad.create(name, faction, archetype)
   end
 
+
+  test "get Squads" do
+    {status, list} = Squad.list()
+    assert :ok == status
+    assert is_list(list)
+  end
+
+
   test "get Squad" do
     squad_id = "sq1hash"
-    assert {:ok, %Squad{id: squad_id, name: "First Squad"}} == Squad.get(squad_id)
+    {status, squad} = Squad.get(squad_id)
+    assert :ok == status
+    assert %Squad{
+      id: squad_id,
+      name: "First Squad",
+      archetype: "Aces",
+      faction: "Rebel"
+    } == squad
   end
 end
