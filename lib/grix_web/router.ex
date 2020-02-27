@@ -17,7 +17,7 @@ defmodule GrixWeb.Router do
   scope "/", GrixWeb do
     pipe_through :browser
 
-    get "/", LoginController, :show
+    get "/", MainController, :show
 
     get "/login", LoginController, :show
     post "/login", LoginController, :login
