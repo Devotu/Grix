@@ -1,13 +1,13 @@
 <section>
-  <%= form_for @conn, Routes.squad_path(@conn, :new), fn f -> %>
+  <%= form_for @conn, Routes.squad_path(@conn, :create), fn f -> %>
     <label>
       Name: <%= text_input f, :name %>
     </label>
     <label>
-      Faction: <%= select(f, :faction, ["Rebel": "fReb", "Empire": "fEmp", "Scum": "fScm"]) %>
+      Faction: <%= select(f, :faction, @factions) %>
     </label>
     <label>
-      Archetype: <%= select(f, :archetype, ["None": "atNon", "N of a kind": "atNok", "Aces": "atAce", "Beef": "atBef"]) %>
+      Archetype: <%= select(f, :archetype, @archetypes) %>
     </label>
     <%= submit("Create", class: "button border do submit") %>
   <% end %>

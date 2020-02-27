@@ -11,6 +11,7 @@ defmodule Grix.Helpers.Database do
   end
 
   def run(query) do
+    IO.inspect(query, label: "Running")
     Bolt.query!(Bolt.conn, query)
   end
 

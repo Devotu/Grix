@@ -4,8 +4,8 @@ CREATE (p:Player { id:"p2hash", name:"Player 2", created:TIMESTAMP(), email:"pla
 MATCH 
   (at:Archetype), (f:Faction) 
 WHERE 
-  at.id = "atAce" 
-  AND f.id = "fReb" 
+  at.id = "Ace" 
+  AND f.id = "Rebel" 
 CREATE 
   (f)<-[:Belongs]-
   (sq:Squad {id:"sq1hash", name:"First Squad", created:TIMESTAMP()})

@@ -2,9 +2,19 @@ defmodule GrixWeb.SquadController do
   use GrixWeb, :controller
 
   alias Grix.Squad
+  alias Grix.Faction
+  alias Grix.Archetype
+
+  alias Grix.Helpers.Html
 
   def new(conn, _params) do
-    render(conn, "new.html")
+    {:ok, factions} = Faction.list()
+    {:ok, archetypes} = Archetype.list()
+
+    conn
+    |> assign(:factions, Html.as_options(factions))
+    |> assign(:archetypes, Html.as_options(archetypes))
+    |> render("new.html")
   end
 
   def index(conn, _params) do
