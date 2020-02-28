@@ -38,7 +38,7 @@ WHERE
   AND g.id = "g1hash"
 CREATE
   (p)-[:Got]->
-  (s:Score {id:"s1hash", score:120, created:TIMESTAMP()})
+  (s:Score {id:"s1hash", points:120, created:TIMESTAMP()})
   -[:With]->(sq),
   (s)-[:In]->(g);
 
@@ -50,7 +50,7 @@ WHERE
   AND g.id = "g1hash"
 CREATE
   (p)-[:Got]->
-  (s:Score {id:"s2hash", score:90, created:TIMESTAMP()})
+  (s:Score {id:"s2hash", points:90, created:TIMESTAMP()})
   -[:With]->(sq),
   (s)-[:In]->(g);
 
@@ -70,7 +70,7 @@ WHERE
   AND g.id = "g2hash"
 CREATE
   (p)-[:Got]->
-  (s:Score {id:"s3hash", score:80, created:TIMESTAMP()})
+  (s:Score {id:"s3hash", points:80, created:TIMESTAMP()})
   -[:With]->(sq),
   (s)-[:In]->(g);
 
@@ -82,6 +82,14 @@ WHERE
   AND g.id = "g2hash"
 CREATE
   (p)-[:Got]->
-  (s:Score {id:"s4hash", score:102, created:TIMESTAMP()})
+  (s:Score {id:"s4hash", points:102, created:TIMESTAMP()})
   -[:With]->(sq),
   (s)-[:In]->(g);
+
+
+MATCH 
+  (p:Player)
+WHERE 
+  p.id = "p1hash"
+CREATE
+  (p)-[:Registered]->(g:Game {id:"g3hash", created:TIMESTAMP()});

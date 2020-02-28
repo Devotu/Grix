@@ -5,6 +5,7 @@ defmodule Grix.Game do
 
   defstruct id: "", created: 0, registered: ""
 
+  @spec create(any) :: {:error, :insert_failure} | {:ok, any}
   def create(player_id) do
 
     guid = Helpers.generate_guid()
