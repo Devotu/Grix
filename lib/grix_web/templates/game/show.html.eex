@@ -1,0 +1,5 @@
+<section>
+  <p><b>Id:</b> <%= @game.id %>
+  <p><b>Created:</b> <%= @game.created %>
+  <p><b>Registered by:</b> <%= @game.registered %>
+</section>

@@ -7,5 +7,8 @@
     <li>
       <%= button("Squads", to: Routes.squad_path(@conn, :index), method: "get", class: "button border link-button") %>
     </li>
+    <li>
+      <%= button("New Game", to: Routes.game_path(@conn, :new), method: "get", class: "button border link-button") %>
+    </li>
   </ul>
 </section>

@@ -22,6 +22,7 @@ defmodule Grix.Player do
     |> Helpers.return_expected_single
   end
 
+  @spec get(any) :: :error | {:error, :invalid_request | :not_found} | {:ok, any}
   def get(id) do
     query = """
     MATCH
@@ -35,6 +36,20 @@ defmodule Grix.Player do
     Bolt.query!(Bolt.conn, query)
     |> nodes_to_players
     |> Helpers.return_expected_single
+  end
+
+
+  def list() do
+    query = """
+    MATCH
+      (p:Player)
+    RETURN
+      p
+    """
+
+    Bolt.query!(Bolt.conn, query)
+    |> nodes_to_players
+    |> Helpers.return_as_tuple()
   end
 
   #Helpers
