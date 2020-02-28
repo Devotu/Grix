@@ -6,6 +6,7 @@ defmodule GrixWeb.GameController do
   alias Grix.Archetype
   alias Grix.Squad
   alias Grix.Player
+  alias Grix.Score
 
   alias Grix.Helpers.Html
 
@@ -29,18 +30,26 @@ defmodule GrixWeb.GameController do
   end
 
 
-  def create(conn, _params) do
-    case Game.create(conn.assigns.player.id) do
-      {:ok, id} ->
-        {:ok, game} = Game.get(id)
-        conn
-        |> assign(:game, game)
-        |> render("show.html")
-      {:error, _kind} ->
-        conn
-        |> put_flash(:error, "Could not create new game")
-        |> render("new.html")
-    end
+  def create(conn, params) do
+    IO.inspect(params, label: "params")
+    {:ok, squad_1} = Squad.get(params["squad_1"])
+    {:ok, squad_2} = Squad.get(params["squad_2"])
+
+    {:ok, game_id} = Game.create(conn.assigns.player.id)
+    {:ok, score_1_id} = Score.create(params["player_1"], params["squad_1"], game_id, params["points_1"])
+    {:ok, score_2_id} = Score.create(params["player_2"], params["squad_2"], game_id, params["points_2"])
+
+    {:ok, game} = Game.get(game_id)
+    {:ok, score_1} = Score.get(score_1_id)
+    {:ok, score_2} = Score.get(score_2_id)
+
+    conn
+    |> assign(:game, game)
+    |> assign(:score_1, score_1)
+    |> assign(:score_2, score_2)
+    |> assign(:squad_1, squad_1)
+    |> assign(:squad_2, squad_2)
+    |> render("show.html")
   end
 
 end

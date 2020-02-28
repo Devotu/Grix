@@ -3,7 +3,6 @@ defmodule Grix.GameTest do
   alias Grix.Game
 
   test "create game" do
-    name = "Game 3"
     {status, id} = Game.create("p1hash")
     assert :ok == status
     assert 19 == String.length(id)

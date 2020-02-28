@@ -2,49 +2,25 @@
   <%= form_for @conn, Routes.game_path(@conn, :create), fn f -> %>
     <section>
       <label>
-        Player: <%= select(f, :players_1, @players) %>
+        Player: <%= select(f, :player_1, @players) %>
       </label>
       <label>
-        Score: <%= number_input f, :score_1 %>
+        Points: <%= number_input f, :points_1 %>
       </label>  
-      <section style="display: flex">
-        <section class="left-option">
-          <label>
-            Squad: <%= select(f, :squads_1, @squads) %>
-          </label>
-        </section>
-        <section class="right-option">
-          <label>
-            Faction: <%= select(f, :faction_1, @factions) %>
-          </label>
-          <label>
-            Archetype: <%= select(f, :archetype_1, @archetypes) %>
-          </label>
-        </section>
-      </section>
+      <label>
+        Squad: <%= select(f, :squad_1, @squads) %>
+      </label>
     </section>
     <section>
       <label>
-        Player: <%= select(f, :players_2, @players) %>
+        Player: <%= select(f, :player_2, @players) %>
       </label>
       <label>
-        Score: <%= number_input f, :score_2 %>
+        Points: <%= number_input f, :points_2 %>
       </label> 
-      <section style="display: flex">
-        <section class="left-option">
-          <label>
-            Squad: <%= select(f, :squads_2, @squads) %>
-          </label>
-        </section>
-        <section class="right-option">
-          <label>
-            Faction: <%= select(f, :faction_2, @factions) %>
-          </label>
-          <label>
-            Archetype: <%= select(f, :archetype_2, @archetypes) %>
-          </label>
-        </section>
-      </section>
+      <label>
+        Squad: <%= select(f, :squad_2, @squads) %>
+      </label>
     </section>
     <%= submit("Register", class: "button border do submit") %>
   <% end %>

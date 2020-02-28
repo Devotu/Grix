@@ -2,4 +2,10 @@
   <p><b>Id:</b> <%= @game.id %>
   <p><b>Created:</b> <%= @game.created %>
   <p><b>Registered by:</b> <%= @game.registered %>
+
+  <p><b>Squad:</b> <%= @squad_1.name %>
+  <p><b>Points:</b> <%= @score_1.points %>
+  <p><b>Vs</b>
+  <p><b>Squad:</b> <%= @squad_2.name %>
+  <p><b>Points:</b> <%= @score_2.points %>
 </section>
