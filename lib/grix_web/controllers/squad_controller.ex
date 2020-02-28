@@ -50,9 +50,7 @@ defmodule GrixWeb.SquadController do
 
 
   def create(conn, params) do
-    xws = Database.to_safe_json(params["xws"])
-    IO.inspect(xws, label: "xws")
-    case Squad.create(params["name"], params["faction"], params["archetype"], xws) do
+    case Squad.create(params["name"], params["faction"], params["archetype"], params["xws"]) do
       {:ok, id} ->
         {:ok, squad} = Squad.get(id)
         conn

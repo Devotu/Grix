@@ -6,7 +6,10 @@ defmodule GrixWeb.SquadTest do
     name = "Squad 3"
     faction = "Rebel"
     archetype = "Ace"
-    {status, id} = Squad.create(name, faction, archetype)
+    xws = """
+    {"key": 1, "value": "valid json"}
+    """
+    {status, id} = Squad.create(name, faction, archetype, xws)
     assert :ok == status
     assert 19 == String.length(id)
   end
@@ -15,7 +18,10 @@ defmodule GrixWeb.SquadTest do
     name = ""
     faction = "Scum"
     archetype = "Nok"
-    assert {:error, :missing_parameter, "name"} == Squad.create(name, faction, archetype)
+    xws = """
+    {"key": 1, "value": "valid json"}
+    """
+    assert {:error, :missing_parameter, "name"} == Squad.create(name, faction, archetype, xws)
   end
 
 

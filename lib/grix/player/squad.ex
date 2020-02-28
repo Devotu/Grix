@@ -13,6 +13,7 @@ defmodule Grix.Squad do
   def create(name, faction, archetype, xws) do
 
     guid = Helpers.generate_guid()
+    safe_xws = Database.to_safe_json(xws)
 
     query = """
     MATCH
@@ -22,7 +23,7 @@ defmodule Grix.Squad do
       AND f.id = "#{faction}"
     CREATE
       (f)<-[:Belongs]-
-      (sq:Squad {id:"#{guid}", name:"#{name}", xws:"#{xws}", created:TIMESTAMP()})
+      (sq:Squad {id:"#{guid}", name:"#{name}", xws:"#{safe_xws}", created:TIMESTAMP()})
       -[:Is]->(at)
     RETURN sq.id AS id;
     """
