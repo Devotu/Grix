@@ -1,4 +1,4 @@
-defmodule GrixWeb.FactionTest do
+defmodule Grix.FactionTest do
   use ExUnit.Case
   alias Grix.Faction
 

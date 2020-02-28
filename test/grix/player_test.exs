@@ -1,17 +1,17 @@
-defmodule GrixWeb.PlayerTest do
+defmodule Grix.PlayerTest do
   use ExUnit.Case
   alias Grix.Player
 
   test "login" do
     username = "player1@mail.com"
     password = "Player1"
-    assert {:ok, "p1hash"} == Player.login(username, password) 
+    assert {:ok, "p1hash"} == Player.login(username, password)
   end
 
   test "login - fail" do
     username = "player1@mail.com"
     password = "Player2"
-    assert {:error, :not_found} == Player.login(username, password) 
+    assert {:error, :not_found} == Player.login(username, password)
   end
 
   test "get Player" do

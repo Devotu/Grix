@@ -1,4 +1,4 @@
-defmodule GrixWeb.ArchetypeTest do
+defmodule Grix.ArchetypeTest do
   use ExUnit.Case
   alias Grix.Archetype
 

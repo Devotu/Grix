@@ -1,4 +1,4 @@
-defmodule GrixWeb.SquadTest do
+defmodule Grix.SquadTest do
   use ExUnit.Case
   alias Grix.Squad
 
