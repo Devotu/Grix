@@ -2,6 +2,7 @@ defmodule Grix.Score do
   alias Grix.Helpers.General, as: Helpers
   alias Grix.Helpers.Database
   alias Grix.Score
+  alias Grix.Helpers.Calculator
 
   defstruct id: "", points: 0
 
@@ -92,5 +93,15 @@ defmodule Grix.Score do
   defp node_to_score(node) do
     data_map = Helpers.atomize_keys(node["score"])
     struct(Score, data_map)
+  end
+
+
+  def squad_average(squad_id) do
+    {:ok, scores} = list(squad_id)
+    average = scores
+      |> Enum.map(&(&1.points))
+      |> Calculator.average()
+
+    {:ok, average}
   end
 end

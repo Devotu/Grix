@@ -34,4 +34,12 @@ defmodule Grix.ScoreTest do
     assert is_integer(score.points)
     assert 120 == score.points
   end
+
+
+  test "get Squad average" do
+    {status, average} = Score.squad_average("sq1hash")
+    assert :ok == status
+    assert 0 != average
+    assert is_number(average)
+  end
 end
