@@ -4,9 +4,7 @@ defmodule GrixWeb.SquadController do
   alias Grix.Squad
   alias Grix.Faction
   alias Grix.Archetype
-
   alias Grix.Helpers.Html
-  alias Grix.Helpers.Database
 
   def new(conn, _params) do
     {:ok, factions} = Faction.list()
