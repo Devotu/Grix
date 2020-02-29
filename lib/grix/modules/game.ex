@@ -1,6 +1,7 @@
 defmodule Grix.Game do
   alias Grix.Helpers.General, as: Helpers
   alias Grix.Helpers.Database
+  alias Grix.Helpers.Calculator
   alias Grix.Game
 
   defstruct id: "", created: 0, registered: ""
@@ -40,7 +41,6 @@ defmodule Grix.Game do
 
     Database.get(query)
     |> nodes_to_games
-    |> IO.inspect(label: "got")
     |> Helpers.return_as_tuple()
   end
 
@@ -59,7 +59,6 @@ defmodule Grix.Game do
 
     Database.get(query)
     |> nodes_to_games
-    |> IO.inspect(label: "got")
     |> Helpers.return_as_tuple()
   end
 
@@ -91,5 +90,27 @@ defmodule Grix.Game do
   defp node_to_game(node) do
     data_map = Helpers.atomize_keys(node["game"])
     struct(Game, data_map)
+  end
+
+
+  def squad_win_percentage(squad_id) do
+    query = """
+    MATCH
+      (ops:Score)-[:In]->(:Game)<-[:In]-(s:Score)-[:With]->(sq:Squad)
+    WHERE
+      sq.id = "#{squad_id}"
+      AND s.points > ops.points
+    RETURN
+      {} AS game
+    """
+
+    {:ok, games} = Game.list(squad_id)
+    count_games = Calculator.count(games)
+
+    Database.get(query)
+    |> nodes_to_games
+    |> Calculator.count()
+    |> Calculator.percentage(count_games)
+    |> Helpers.return_as_tuple()
   end
 end

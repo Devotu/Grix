@@ -33,4 +33,12 @@ defmodule Grix.GameTest do
     assert "p1hash" == game.registered
     assert is_integer(game.created)
   end
+
+
+  test "get Squad win percentage" do
+    {status, percentage} = Game.squad_win_percentage("sq1hash")
+    assert :ok == status
+    assert 0 != percentage
+    assert is_number(percentage)
+  end
 end
