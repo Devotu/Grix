@@ -5,3 +5,8 @@
   <p><b>Faction:</b> <%= @squad.faction %>
   <p><b>XWS:</b> <%= @squad.xws %>
 </section>
+<section>
+  <h4>Score</h4>
+  <p><b>Average:</b> <%= @stats.average %>
+  <p><b>Win %:</b> <%= @stats.win_percent %>
+</section>

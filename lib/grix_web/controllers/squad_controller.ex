@@ -2,6 +2,8 @@ defmodule GrixWeb.SquadController do
   use GrixWeb, :controller
 
   alias Grix.Squad
+  alias Grix.Score
+  alias Grix.Game
   alias Grix.Faction
   alias Grix.Archetype
   alias Grix.Helpers.Html
@@ -30,10 +32,16 @@ defmodule GrixWeb.SquadController do
   end
 
   def show(conn, params) do
-    case Squad.get(params["id"]) do
+    squad_id = params["id"]
+
+    case Squad.get(squad_id) do
       {:ok, squad} ->
+        {:ok, average} = Score.squad_average(squad_id)
+        {:ok, win_percent} = Game.squad_win_percentage(squad_id)
+
         conn
         |> assign(:squad, squad)
+        |> assign(:stats, %{average: average, win_percent: win_percent})
         |> render("show.html")
       {:error, :not_found} ->
         conn
