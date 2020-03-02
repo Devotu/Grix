@@ -56,18 +56,33 @@ defmodule GrixWeb.SquadController do
 
 
   def create(conn, params) do
-    case Squad.create(params["name"], params["faction"], params["archetype"], params["xws"]) do
-      {:ok, id} ->
-        {:ok, squad} = Squad.get(id)
+    # case Squad.create(params["name"], params["faction"], params["archetype"], params["xws"]) do
+    #   {:ok, id} ->
+    #     {:ok, squad} = Squad.get(id)
+    #     conn
+    #     |> assign(:squad, squad)
+    #     |> render("show.html")
+    #   {:error, _kind, msg} ->
+    #     conn
+    #     |> put_flash(:error, msg)
+    #     |> render("new.html")
+    #   _ ->
+    #     :error
+    # end
+
+    case Poison.decode(params["xws"]) do
+      {:ok, xws} ->
+        IO.inspect(xws, label: "xws")
         conn
-        |> assign(:squad, squad)
-        |> render("show.html")
-      {:error, _kind, msg} ->
-        conn
-        |> put_flash(:error, msg)
-        |> render("new.html")
+        |> assign(:name, params["name"])
+        |> assign(:faction, params["faction"])
+        |> assign(:archetype, params["archetype"])
+        |> assign(:xws, xws)
+        |> render("specify.html")
       _ ->
-        :error
+        conn
+        |> put_flash(:error, "Could not parse xws")
+        |> new(nil)
     end
   end
 end

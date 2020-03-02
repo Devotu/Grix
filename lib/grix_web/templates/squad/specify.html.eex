@@ -1,0 +1,22 @@
+<section>
+  <%= form_for @conn, Routes.squad_path(@conn, :create), fn f -> %>
+    <label>
+      Name: <%= text_input f, :name %>
+    </label>
+    <label>
+      Faction: <%= text_input f, :faction %>
+    </label>
+    <label>
+      Archetype: <%= text_input f, :archetype %>
+    </label>
+    <section>
+      <label>
+        Specification
+      </label>
+      <%= for pilot <- @xws["pilots"] do %>
+        <%= render(GrixWeb.SquadView, "pilot.html", %{form: f, pilot: pilot}) %>
+      <% end %>
+    </section>
+    <%= submit("Create", class: "button border do submit") %>
+  <% end %>
+</section>

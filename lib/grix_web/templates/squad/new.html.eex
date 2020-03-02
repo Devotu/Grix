@@ -12,6 +12,6 @@
     <label>
       XWS: <%= textarea f, :xws %>
     </label>
-    <%= submit("Create", class: "button border do submit") %>
+    <%= submit("Submit", class: "button border do submit") %>
   <% end %>
 </section>

@@ -1,0 +1,34 @@
+<section>
+  <h4>
+    <%= @pilot["name"] %>: <%= @pilot["points"] %>
+  </h4>
+  
+  <label>
+    Ship: <%= text_input @form, :ship, [value: @pilot["ship"]] %> <%= number_input @form, :ship_points, [value: @pilot["points"]] %>
+  </label>
+  
+  <%= if(@pilot["upgrades"] != nil) do%>
+    <%= if(@pilot["upgrades"]["crew"] != nil) do%>
+      <%= for crew <- @pilot["upgrades"]["crew"] do %>
+        <label>
+          Crew: <%= text_input @form, :crew, [value: crew] %> <%= number_input @form, :crew_points, [value: 0] %>
+        </label>
+      <% end %>
+    <% end %>
+    <%= if(@pilot["upgrades"]["gunner"] != nil) do%>
+      <%= for gunner <- @pilot["upgrades"]["gunner"] do %>
+        <label>
+          Gunner: <%= text_input @form, :gunner, [value: gunner] %> <%= number_input @form, :gunner_points, [value: 0] %>
+        </label>
+      <% end %>
+    <% end %>
+    <%= if(@pilot["upgrades"]["talent"] != nil) do%>
+      <%= for talent <- @pilot["upgrades"]["talent"] do %>
+        <label>
+          Talent: <%= text_input @form, :talent, [value: talent] %> <%= number_input @form, :talent_points, [value: 0] %>
+        </label>
+      <% end %>
+    <% end %>
+  <% end %>
+
+</section>

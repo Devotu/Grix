@@ -26,6 +26,7 @@ defmodule GrixWeb.Router do
 
     get "/squads", SquadController, :index
     get "/squads/new", SquadController, :new
+    get "/squads/specify", SquadController, :specify
     get "/squads/:id", SquadController, :show
     post "/squads", SquadController, :create
 
