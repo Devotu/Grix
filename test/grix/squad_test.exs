@@ -33,7 +33,7 @@ defmodule Grix.SquadTest do
 
 
   test "get Squad" do
-    squad_id = "sq1hash"
+    squad_id = "squad1hash"
     {status, squad} = Squad.get(squad_id)
     assert :ok == status
     assert %Squad{

@@ -5,7 +5,7 @@ defmodule Grix.PlayerTest do
   test "login" do
     username = "player1@mail.com"
     password = "Player1"
-    assert {:ok, "p1hash"} == Player.login(username, password)
+    assert {:ok, "player1hash"} == Player.login(username, password)
   end
 
   test "login - fail" do
@@ -15,7 +15,7 @@ defmodule Grix.PlayerTest do
   end
 
   test "get Player" do
-    user_id = "p1hash"
-    assert {:ok, %Player{id: "p1hash", name: "Player 1"}} == Player.get(user_id)
+    user_id = "player1hash"
+    assert {:ok, %Player{id: "player1hash", name: "Player 1"}} == Player.get(user_id)
   end
 end

@@ -4,7 +4,7 @@ defmodule Grix.ScoreTest do
 
   test "create score" do
     points = 125
-    {status, id} = Score.create("p1hash", "sq1hash", "g3hash", points)
+    {status, id} = Score.create("player1hash", "squad1hash", "game3hash", points)
     assert :ok == status
     assert 19 == String.length(id)
   end
@@ -19,7 +19,7 @@ defmodule Grix.ScoreTest do
 
 
   test "get Scores by Squad" do
-    {status, list} = Score.list("sq1hash")
+    {status, list} = Score.list("squad1hash")
     assert :ok == status
     assert is_list(list)
     assert 2 <= Enum.count(list)
@@ -27,7 +27,7 @@ defmodule Grix.ScoreTest do
 
 
   test "get Score" do
-    score_id = "s1hash"
+    score_id = "score1hash"
     {status, score} = Score.get(score_id)
     assert :ok == status
     assert score_id == score.id
@@ -37,7 +37,7 @@ defmodule Grix.ScoreTest do
 
 
   test "get Squad average" do
-    {status, average} = Score.squad_average("sq1hash")
+    {status, average} = Score.squad_average("squad1hash")
     assert :ok == status
     assert 0 != average
     assert is_number(average)
