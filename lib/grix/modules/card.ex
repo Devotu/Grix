@@ -23,6 +23,27 @@ defmodule Grix.Card do
   end
 
 
+  def get(ids) when is_list(ids) do
+
+    found_in = Database.generate_in(ids)
+
+    query = """
+    MATCH
+      (c:Card)
+    WHERE
+      c.id #{found_in}
+    RETURN
+      {
+        id: c.id,
+        name: c.name
+      } AS card
+    """
+
+    Database.get(query)
+    |> nodes_to_cards
+    |> Helpers.return_as_tuple()
+  end
+
   def get(id) do
     query = """
     MATCH

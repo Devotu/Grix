@@ -11,4 +11,12 @@ defmodule Grix.CardTest do
     assert :ok == status
     assert "Crack Shot" == card.name
   end
+
+  test "get Cards" do
+    {status, cards} = Card.get(["crackshot", "brilliantevasion"])
+    assert :ok == status
+    [first, second] = cards
+    assert "Brillian Evasion" == first.name
+    assert "Crack Shot" == second.name
+  end
 end

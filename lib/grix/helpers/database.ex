@@ -53,4 +53,30 @@ defmodule Grix.Helpers.Database do
     String.replace(json_string, "--", ~s("))
   end
   def from_safe_json(_), do: ""
+
+
+  def generate_id(base) do
+    base
+      |> String.replace(" ", "")
+      |> String.downcase()
+  end
+
+  def convert_to_label(base) do
+    base
+      |> String.replace(" ", "")
+      |> String.downcase()
+      |> String.capitalize()
+  end
+
+  def generate_in(list) do
+    list_string = list
+    |> Enum.map(&enquote/1)
+    |> Enum.join(", ")
+
+    "IN [#{list_string}]"
+  end
+
+  defp enquote(string) do
+    ~s("#{string}")
+  end
 end
