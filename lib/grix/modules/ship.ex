@@ -11,6 +11,15 @@ defmodule Grix.Ship do
 
 
   def assign_upgrades(%Ship{} = ship, upgrades) do
-    %{ship | :upgrades => upgrades}
+    case upgrades_are_valid(ship, upgrades) do
+      :ok ->
+        %{ship | :upgrades => upgrades}
+      _ ->
+        {:error, :invalid_upgrades}
+    end
+  end
+
+  defp upgrades_are_valid(%Ship{} = _ship, upgrades) when is_list(upgrades) do
+    :ok
   end
 end
