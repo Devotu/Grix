@@ -2,8 +2,22 @@ defmodule Grix.Squad do
   alias Grix.Helpers.General, as: Helpers
   alias Grix.Helpers.Database
   alias Grix.Squad
+  alias Grix.XWS
 
   defstruct id: "", name: "", archetype: "", faction: "", xws: ""
+
+
+  def generate("", _, _, _), do: {:error, :missing_parameter, "name"}
+  def generate(_, "", _, _), do: {:error, :missing_parameter, "faction"}
+  def generate(_, _, "", _), do: {:error, :missing_parameter, "archetype"}
+
+  def generate(name, faction, archetype, xws_string) do
+
+    guid = Helpers.generate_guid()
+    xws = XWS.parse(xws_string)
+
+    {:ok, %Squad{id: guid, name: name, archetype: archetype, faction: faction, xws: xws}}
+  end
 
 
   def create("", _, _, _), do: {:error, :missing_parameter, "name"}

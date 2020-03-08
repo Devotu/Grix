@@ -43,4 +43,29 @@ defmodule Grix.SquadTest do
       faction: "Rebel"
     } == squad
   end
+
+
+  test "generate squad" do
+    name = "Squad 4"
+    faction = "Empire"
+    archetype = "Swarm"
+    xws = """
+    {"key": 1, "value": "valid json"}
+    """
+    {status, squad} = Squad.generate(name, faction, archetype, xws)
+    assert :ok == status
+    assert %Squad{} = squad
+    assert 19 == String.length(squad.id)
+    assert name == squad.name
+  end
+
+  test "generate squad - faction failure" do
+    name = "Squad 4"
+    faction = ""
+    archetype = "Swarm"
+    xws = """
+    {"key": 1, "value": "valid json"}
+    """
+    assert {:error, :missing_parameter, "faction"} = Squad.generate(name, faction, archetype, xws)
+  end
 end
