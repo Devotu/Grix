@@ -22,52 +22,21 @@ defmodule Grix.Squad do
 
 
   def assign_ships(%Squad{} = squad, ships) do
-    case ships_are_valid(squad, ships) do
-      :ok ->
+    case ships_are_valid(ships) do
+      {:ok, _ships} ->
         squad
         |> Helpers.pipe_update_map(:ships, ships)
         |> Helpers.pipe_update_map(:points, count_points(ships))
         |> Helpers.return_as_tuple()
-      _ ->
-        {:error, :invalid_upgrades}
+      {:error, msg} ->
+        {:error, msg}
     end
   end
 
-  defp ships_are_valid(%Squad{} = _squad, ships) when is_list(ships) do
-    #TODO Validation
-    :ok
-  end
-
-
-  defp valid_count(ships) do
-    ship_count = Enum.count(ships)
-    case ship_count do
-      0 -> {:error, :ship_count_invalid}
-      1 -> {:error, :ship_count_invalid}
-      _ -> {:ok, ship_count}
-    end
-  end
-
-
-  defp valid_points(ships) do
-    sum_points = count_points(ships)
-    case sum_points < 200 do
-      :false -> {:error, :points_exceeded}
-      _ -> {:ok, sum_points}
-    end
-  end
-
-
-  defp count_points(ships) when is_list(ships) do
-    ships
-    |> Enum.map(&Ship.count_points/1)
-    |> Enum.sum()
-  end
-
-
-  defp valid_faction(%Squad{} = squad, ships) do
-    #TODO Validate
-    {:ok, squad.faction}
+  defp ships_are_valid(ships) when is_list(ships) do
+    {:ok, ships}
+    |> valid_count()
+    |> valid_points()
   end
 
 
@@ -143,6 +112,29 @@ defmodule Grix.Squad do
     |> Helpers.return_expected_single
   end
 
+
+  #Invariants
+  defp valid_count({:error, msg}), do: {:error, msg}
+  defp valid_count({:ok, ships}) do
+    ship_count = Enum.count(ships)
+    case ship_count do
+      0 -> {:error, :ship_count_invalid}
+      1 -> {:error, :ship_count_invalid}
+      _ -> {:ok, ships}
+    end
+  end
+
+
+  defp valid_points({:error, msg}), do: {:error, msg}
+  defp valid_points({:ok, ships}) do
+    case count_points(ships) < 200 do
+      :false -> {:error, :point_limit_exceeded}
+      _ -> {:ok, ships}
+    end
+  end
+
+
+
   #Helpers
   defp nodes_to_squads(nodes) do
     Enum.map(nodes, &node_to_squad/1)
@@ -152,5 +144,12 @@ defmodule Grix.Squad do
     data_map = Helpers.atomize_keys(node["squad"])
     parsed_data_map = Map.put(data_map, :xws, Database.from_safe_json(data_map.xws))
     struct(Squad, parsed_data_map)
+  end
+
+
+  defp count_points(ships) when is_list(ships) do
+    ships
+    |> Enum.map(&Ship.count_points/1)
+    |> Enum.sum()
   end
 end
