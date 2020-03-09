@@ -15,8 +15,7 @@ defmodule Grix.CardTest do
   test "get Cards" do
     {status, cards} = Card.get(["crackshot", "brilliantevasion"])
     assert :ok == status
-    [first, second] = cards
-    assert "Brillian Evasion" == first.name
-    assert "Crack Shot" == second.name
+    assert Enum.count(cards, fn x -> x.name == "Brillian Evasion" end)
+    assert Enum.count(cards, fn x -> x.name == "Crack Shot" end)
   end
 end

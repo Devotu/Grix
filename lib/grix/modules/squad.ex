@@ -84,7 +84,6 @@ defmodule Grix.Squad do
 
     Database.get(query)
     |> nodes_to_squads
-    |> IO.inspect(label: "got")
     |> Helpers.return_as_tuple()
   end
 

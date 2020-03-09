@@ -8,11 +8,11 @@ defmodule Grix.Helpers.Database do
 
   def get(query) do
     run(query)
-    |> IO.inspect(label: "got")
   end
 
   def run(query) do
     IO.inspect(query, label: "Running")
+    IO.puts("")
     Bolt.query!(Bolt.conn, query)
   end
 

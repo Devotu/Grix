@@ -18,7 +18,6 @@ defmodule Grix.Archetype do
 
     Database.get(query)
     |> nodes_to_archetypes
-    |> IO.inspect(label: "got")
     |> Helpers.return_as_tuple()
   end
 

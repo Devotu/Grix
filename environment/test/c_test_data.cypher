@@ -1,13 +1,12 @@
 CREATE (p:Player { id:"player1hash", name:"Player 1", created:TIMESTAMP(), email:"player1@mail.com", password:"Player1" });
 CREATE (p:Player { id:"player2hash", name:"Player 2", created:TIMESTAMP(), email:"player2@mail.com", password:"Player2" });
-CREATE (pu:PointsUpdate {id:"pointsupdate1hash", name:"2020-1", enumeration:10 , created:TIMESTAMP()});
 
 MATCH 
   (at:Archetype), (f:Faction), (pu:PointsUpdate) 
 WHERE 
-  at.id = "Ace" 
-  AND f.id = "Rebel" 
-  AND pu.id = "pointsupdate1hash"
+  at.id = "ace" 
+  AND f.id = "rebel" 
+  AND pu.id = "pointsupdate20192"
 CREATE 
   (f)<-[:Belongs]-
   (sq:Squad {id:"squad1hash", name:"First Squad", created:TIMESTAMP()})
@@ -70,9 +69,9 @@ CREATE
 MATCH 
   (at:Archetype), (f:Faction), (pu:PointsUpdate)  
 WHERE 
-  at.id = "Swarm" 
-  AND f.id = "Empire" 
-  AND pu.id = "pointsupdate1hash"
+  at.id = "swarm" 
+  AND f.id = "empire" 
+  AND pu.id = "pointsupdate20192"
 CREATE 
   (f)<-[:Belongs]-
   (sq:Squad {id:"squad2hash", name:"Second Squad", created:TIMESTAMP()})

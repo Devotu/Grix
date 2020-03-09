@@ -6,8 +6,8 @@ defmodule Grix.SquadTest do
 
   test "create squad" do
     name = "Squad 3"
-    faction = "Rebel"
-    archetype = "Ace"
+    faction = "rebel"
+    archetype = "ace"
     xws = """
     {"key": 1, "value": "valid json"}
     """
@@ -18,8 +18,8 @@ defmodule Grix.SquadTest do
 
   test "create squad - fail - missing name" do
     name = ""
-    faction = "Scum"
-    archetype = "Nok"
+    faction = "scum"
+    archetype = "nok"
     xws = """
     {"key": 1, "value": "valid json"}
     """

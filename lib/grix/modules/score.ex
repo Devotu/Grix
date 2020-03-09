@@ -44,7 +44,6 @@ defmodule Grix.Score do
 
     Database.get(query)
     |> nodes_to_scores
-    |> IO.inspect(label: "got")
     |> Helpers.return_as_tuple()
   end
 
@@ -62,7 +61,6 @@ defmodule Grix.Score do
 
     Database.get(query)
     |> nodes_to_scores
-    |> IO.inspect(label: "got")
     |> Helpers.return_as_tuple()
   end
 
