@@ -15,7 +15,6 @@ defmodule Grix.ShipTest do
     ship = Ship.generate("The ship")
     {:ok, upgrades} = Card.get(["redsquadronveteran", "crackshot", "r3astromech"])
     upgraded_ship = Ship.assign_upgrades(ship, upgrades)
-    IO.inspect(upgraded_ship, label: "ship")
     assert 3 == Enum.count(upgraded_ship.upgrades)
   end
 end

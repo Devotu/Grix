@@ -2,9 +2,10 @@ defmodule Grix.Squad do
   alias Grix.Helpers.General, as: Helpers
   alias Grix.Helpers.Database
   alias Grix.Squad
+  alias Grix.Ship
   alias Grix.XWS
 
-  defstruct id: "", name: "", archetype: "", faction: "", xws: ""
+  defstruct id: "", name: "", archetype: "", faction: "", xws: "", points: 0, ships: []
 
 
   def generate("", _, _, _), do: {:error, :missing_parameter, "name"}
@@ -17,6 +18,56 @@ defmodule Grix.Squad do
     xws = XWS.parse(xws_string)
 
     {:ok, %Squad{id: guid, name: name, archetype: archetype, faction: faction, xws: xws}}
+  end
+
+
+  def assign_ships(%Squad{} = squad, ships) do
+    case ships_are_valid(squad, ships) do
+      :ok ->
+        squad
+        |> Helpers.pipe_update_map(:ships, ships)
+        |> Helpers.pipe_update_map(:points, count_points(ships))
+        |> Helpers.return_as_tuple()
+      _ ->
+        {:error, :invalid_upgrades}
+    end
+  end
+
+  defp ships_are_valid(%Squad{} = _squad, ships) when is_list(ships) do
+    #TODO Validation
+    :ok
+  end
+
+
+  defp valid_count(ships) do
+    ship_count = Enum.count(ships)
+    case ship_count do
+      0 -> {:error, :ship_count_invalid}
+      1 -> {:error, :ship_count_invalid}
+      _ -> {:ok, ship_count}
+    end
+  end
+
+
+  defp valid_points(ships) do
+    sum_points = count_points(ships)
+    case sum_points < 200 do
+      :false -> {:error, :points_exceeded}
+      _ -> {:ok, sum_points}
+    end
+  end
+
+
+  defp count_points(ships) when is_list(ships) do
+    ships
+    |> Enum.map(&Ship.count_points/1)
+    |> Enum.sum()
+  end
+
+
+  defp valid_faction(%Squad{} = squad, ships) do
+    #TODO Validate
+    {:ok, squad.faction}
   end
 
 

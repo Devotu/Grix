@@ -19,7 +19,15 @@ defmodule Grix.Ship do
     end
   end
 
+
   defp upgrades_are_valid(%Ship{} = _ship, upgrades) when is_list(upgrades) do
     :ok
+  end
+
+
+  def count_points(%Ship{} = ship) do
+    ship.upgrades
+    |> Enum.map(&(&1.points))
+    |> Enum.sum()
   end
 end

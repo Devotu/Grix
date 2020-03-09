@@ -56,4 +56,9 @@ defmodule Grix.Helpers.General do
   def return_id(%{} = map) do
     map.id
   end
+
+
+  def pipe_update_map(map, key, value) do
+    %{map | key => value}
+  end
 end
