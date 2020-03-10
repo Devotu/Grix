@@ -7,9 +7,7 @@ defmodule Grix.Card do
 
 
 
-  def create(name, category) do
-
-    id = Database.generate_id(name)
+  def create(id, name, category) do
     label = Database.convert_to_label(category)
 
     query = """
@@ -20,6 +18,10 @@ defmodule Grix.Card do
     """
 
     Database.create(query, id)
+  end
+
+  def create(name, category) do
+    create(Database.generate_id(name), name, category)
   end
 
 
@@ -61,6 +63,26 @@ defmodule Grix.Card do
     |> nodes_to_cards
     |> Helpers.return_expected_single
   end
+
+
+  def get_or_create_from_xws({category, ids}) when is_list(ids) do
+    ids
+    |> Enum.map(fn id -> get_or_create_from_xws(category, id) end)
+    |> Enum.map(&Helpers.without_ok/1)
+  end
+
+  def get_or_create_from_xws(category, id) do
+    case get(id) do
+      {:ok, card} ->
+        card
+      {:error, :not_found} ->
+        create(id, Database.convert_to_name(id), category)
+        |> Helpers.without_ok()
+      _ ->
+        {:error, :card_error}
+    end
+  end
+
 
   #Helpers
   defp nodes_to_cards(nodes) do

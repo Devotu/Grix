@@ -72,6 +72,32 @@ defmodule Grix.SquadTest do
   end
 
 
+  test "generate from xws" do
+    xws = """
+    {
+      "description":"",
+      "faction":"galacticempire",
+      "name":"Darth Swarm",
+      "pilots":[
+        {"id":"darthvader","name":"darthvader","points":80,"ship":"tieadvancedx1","upgrades":{"force-power":["sense"],"sensor":["firecontrolsystem"],"modification":["afterburners"]}},
+        {"id":"academypilot","name":"academypilot","points":22,"ship":"tielnfighter"},
+        {"id":"academypilot","name":"academypilot","points":22,"ship":"tielnfighter"},
+        {"id":"academypilot","name":"academypilot","points":22,"ship":"tielnfighter"},
+        {"id":"academypilot","name":"academypilot","points":22,"ship":"tielnfighter"},
+        {"id":"delmeeko","name":"delmeeko","points":30,"ship":"tielnfighter"}
+      ],
+      "points":198,
+      "vendor":{"yasb":{"builder":"Yet Another Squad Builder 2.0","builder_url":"https://raithos.github.io/","link":"https://raithos.github.io/?f=Galactic%20Empire&d=v8ZsZ200Z173X75W113WW105Y229XY229XY229XY229XY222XW&sn=Unnamed%20Squadron&obs="}},"version":"2.0.0"}
+    """
+
+    {status, squad} = Squad.generate_from_xws(xws)
+    assert :ok == status
+    assert %Squad{} = squad
+    assert 198 == squad.points
+    assert 6 == Enum.count(squad.ships)
+  end
+
+
   test "assign ships" do
     upgrades = [
       %Card{id: "redsquadronveteran", name: "Red Squadron Veteran", type: "Ship", points: 41},
@@ -112,4 +138,5 @@ defmodule Grix.SquadTest do
     assert :error == status
     assert :point_limit_exceeded == result
   end
+
 end

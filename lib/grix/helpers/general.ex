@@ -61,4 +61,8 @@ defmodule Grix.Helpers.General do
   def pipe_update_map(map, key, value) do
     %{map | key => value}
   end
+
+
+  def without_ok({:ok, value}), do: value
+  def without_ok(other), do: other
 end

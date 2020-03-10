@@ -13,11 +13,18 @@ defmodule Grix.Squad do
   def generate(_, _, "", _), do: {:error, :missing_parameter, "archetype"}
 
   def generate(name, faction, archetype, xws_string) do
-
     guid = Helpers.generate_guid()
     xws = XWS.parse(xws_string)
-
     {:ok, %Squad{id: guid, name: name, archetype: archetype, faction: faction, xws: xws}}
+  end
+
+
+  def generate_from_xws(xws_string) when is_bitstring(xws_string) do
+    {:ok, xws} = XWS.parse(xws_string)
+    {:ok, squad} = generate(xws["name"], xws["faction"], "none", xws_string)
+    ships = Enum.map(xws["pilots"], &Ship.generate_from_xws_pilot/1)
+    IO.inspect(ships, label: "ships")
+    assign_ships(squad, ships)
   end
 
 

@@ -64,7 +64,13 @@ defmodule Grix.Helpers.Database do
   def convert_to_label(base) do
     base
       |> String.replace(" ", "")
+      |> String.replace("-", "")
       |> String.downcase()
+      |> String.capitalize()
+  end
+
+  def convert_to_name(base) do
+    base
       |> String.capitalize()
   end
 
