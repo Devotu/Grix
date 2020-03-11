@@ -78,6 +78,8 @@ defmodule Grix.Card do
       {:error, :not_found} ->
         create(id, Database.convert_to_name(id), category)
         |> Helpers.without_ok()
+        |> get()
+        |> Helpers.without_ok()
       _ ->
         {:error, :card_error}
     end
