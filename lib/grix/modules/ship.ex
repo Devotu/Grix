@@ -12,18 +12,23 @@ defmodule Grix.Ship do
   end
 
 
-  def generate_from_xws_pilot(%{"upgrades" => upgrade_list, "ship" => pilot}) do
+  def generate_from_xws_pilot(%{"upgrades" => upgrade_list, "ship" => pilot, "points" => points}) do
     upgrades = Enum.reduce(upgrade_list, [], fn x, acc -> acc ++ Card.get_or_create_from_xws(x) end)
     pilot_card = Card.get_or_create_from_xws("pilot", pilot)
+    IO.inspect(pilot, label: "pilot: ")
 
-    ship = generate(Database.convert_to_name(pilot))
-    assign_upgrades(ship, upgrades ++ [pilot_card])
+    generate(Database.convert_to_name(pilot))
+    |> assign_upgrades(upgrades ++ [pilot_card])
+    |> IO.inspect(label: "ship")
+    |> Map.put(:points, points)
   end
 
-  def generate_from_xws_pilot(%{"ship" => pilot}) do
+  def generate_from_xws_pilot(%{"ship" => pilot, "points" => points}) do
     pilot_card = Card.get_or_create_from_xws("pilot", pilot)
-    ship = generate(Database.convert_to_name(pilot))
-    assign_upgrades(ship, [pilot_card])
+
+    generate(Database.convert_to_name(pilot))
+    |> assign_upgrades([pilot_card])
+    |> Map.put(:points, points)
   end
 
 

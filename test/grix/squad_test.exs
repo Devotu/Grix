@@ -95,6 +95,7 @@ defmodule Grix.SquadTest do
     assert %Squad{} = squad
     assert 198 == squad.points
     assert 6 == Enum.count(squad.ships)
+    assert List.first(squad.ships).points > 0
   end
 
 
