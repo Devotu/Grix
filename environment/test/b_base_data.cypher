@@ -17,3 +17,5 @@ CREATE (f:Faction {id:"separatist", name:"Separatist", created:TIMESTAMP()});
 CREATE (pu:PointsUpdate {id:"pointsupdate20191", name:"2019-1", enumeration:1 , created:TIMESTAMP()});
 CREATE (pu:PointsUpdate {id:"pointsupdate20192", name:"2019-2", enumeration:2 , created:TIMESTAMP()});
 CREATE (pu:PointsUpdate {id:"pointsupdate20201", name:"2020-1", enumeration:3 , created:TIMESTAMP()});
+
+CREATE (p:Player:AI { id:"flycasual", name:"Fly Casual", created:TIMESTAMP(), email:"mail@mail.com", password:"FlyCasualPassword" });
