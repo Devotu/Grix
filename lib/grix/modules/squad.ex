@@ -25,6 +25,12 @@ defmodule Grix.Squad do
     ships = Enum.map(xws["pilots"], &Ship.generate_from_xws_pilot/1)
     IO.inspect(ships, label: "ships")
     assign_ships(squad, ships)
+
+    squad
+    |> assign_ships(ships)
+    |> Helpers.without_ok()
+    |> Map.put(:points, xws["points"])
+    |> Helpers.return_as_tuple()
   end
 
 
