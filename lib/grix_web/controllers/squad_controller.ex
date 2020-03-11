@@ -6,6 +6,7 @@ defmodule GrixWeb.SquadController do
   alias Grix.Game
   alias Grix.Faction
   alias Grix.Archetype
+  alias Grix.XWS
   alias Grix.Helpers.Html
 
   def new(conn, _params) do
@@ -55,30 +56,37 @@ defmodule GrixWeb.SquadController do
   end
 
 
-  def create(conn, params) do
-    # case Squad.create(params["name"], params["faction"], params["archetype"], params["xws"]) do
-    #   {:ok, id} ->
-    #     {:ok, squad} = Squad.get(id)
-    #     conn
-    #     |> assign(:squad, squad)
-    #     |> render("show.html")
-    #   {:error, _kind, msg} ->
-    #     conn
-    #     |> put_flash(:error, msg)
-    #     |> render("new.html")
-    #   _ ->
-    #     :error
-    # end
-
+  def create(conn, %{"xws" => ""} = params) do
     case Poison.decode(params["xws"]) do
       {:ok, xws} ->
-        IO.inspect(xws, label: "xws")
         conn
         |> assign(:name, params["name"])
         |> assign(:faction, params["faction"])
         |> assign(:archetype, params["archetype"])
         |> assign(:xws, xws)
         |> render("specify.html")
+      _ ->
+        conn
+        |> put_flash(:error, "Could not parse xws")
+        |> new(nil)
+    end
+  end
+
+  def create(conn, params) do
+    case XWS.is_valid(params["xws"]) do
+      :ok ->
+        {:ok, squad} = Squad.generate_from_xws(params["xws"])
+        conn
+        |> assign(:name, squad.name)
+        |> assign(:faction, squad.faction)
+        |> assign(:archetype, params["archetype"])
+        |> assign(:xws, squad.xws)
+        |> assign(:squad, squad)
+        |> render("specify.html")
+      {:error, msg} ->
+        conn
+        |> put_flash(:error, msg)
+        |> new(nil)
       _ ->
         conn
         |> put_flash(:error, "Could not parse xws")

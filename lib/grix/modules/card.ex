@@ -37,7 +37,8 @@ defmodule Grix.Card do
     RETURN
       {
         id: c.id,
-        name: c.name
+        name: c.name,
+        tags: labels(c)
       } AS card
     """
 
@@ -55,7 +56,8 @@ defmodule Grix.Card do
     RETURN
       {
         id: c.id,
-        name: c.name
+        name: c.name,
+        tags: labels(c)
       } AS card
     """
 
@@ -94,5 +96,16 @@ defmodule Grix.Card do
   defp node_to_card(node) do
     data_map = Helpers.atomize_keys(node["card"])
     struct(Card, data_map)
+    |> Map.put(:type, select_type(data_map))
   end
+
+
+  defp select_type(%{tags: tags}) do
+    tags
+    |> Enum.filter(&(&1 != "Card"))
+    |> List.first()
+    |> String.downcase()
+  end
+
+  defp select_type(_), do: ""
 end

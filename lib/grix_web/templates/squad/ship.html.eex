@@ -1,0 +1,28 @@
+<section>
+  <h4>
+    <%= @ship.name %>: <%= @ship.points %>
+  </h4>
+  
+  <label>
+    Ship: <%= @ship.ship %> <%= @ship.points %>
+  </label>
+  
+  <%= if(@ship.upgrades != nil) do%>
+    <%= for modification <- Enum.filter(@ship.upgrades, &(&1.type == "modification")) do %>
+      <label>
+        Modification: <%= text_input @form, :modification, [value: modification.id] %> <%= number_input @form, :modification_points, [value: 0] %>
+      </label>
+    <% end %>
+    <%= for sensor <- Enum.filter(@ship.upgrades, &(&1.type == "sensor")) do %>
+      <label>
+        Sensor: <%= text_input @form, :sensor, [value: sensor.id] %> <%= number_input @form, :sensor_points, [value: 0] %>
+      </label>
+    <% end %>
+    <%= for forcepower <- Enum.filter(@ship.upgrades, &(&1.type == "forcepower")) do %>
+      <label>
+        Force: <%= text_input @form, :forcepower, [value: forcepower.id] %> <%= number_input @form, :forcepower_points, [value: 0] %>
+      </label>
+    <% end %>
+  <% end %>
+
+</section>

@@ -4,7 +4,7 @@ defmodule Grix.Ship do
   alias Grix.Ship
   alias Grix.Card
 
-  defstruct id: "", name: "", upgrades: [], points: 0
+  defstruct id: "", name: "", ship: "", upgrades: [], points: 0
 
   def generate(name) do
     id = Helpers.generate_guid()
@@ -12,23 +12,23 @@ defmodule Grix.Ship do
   end
 
 
-  def generate_from_xws_pilot(%{"upgrades" => upgrade_list, "ship" => pilot, "points" => points}) do
+  def generate_from_xws_pilot(%{"upgrades" => upgrade_list, "ship" => ship, "id" => pilot, "points" => points}) do
     upgrades = Enum.reduce(upgrade_list, [], fn x, acc -> acc ++ Card.get_or_create_from_xws(x) end)
     pilot_card = Card.get_or_create_from_xws("pilot", pilot)
-    IO.inspect(pilot, label: "pilot: ")
 
     generate(Database.convert_to_name(pilot))
     |> assign_upgrades(upgrades ++ [pilot_card])
-    |> IO.inspect(label: "ship")
     |> Map.put(:points, points)
+    |> Map.put(:ship, ship)
   end
 
-  def generate_from_xws_pilot(%{"ship" => pilot, "points" => points}) do
+  def generate_from_xws_pilot(%{"ship" => ship, "id" => pilot, "points" => points}) do
     pilot_card = Card.get_or_create_from_xws("pilot", pilot)
 
     generate(Database.convert_to_name(pilot))
     |> assign_upgrades([pilot_card])
     |> Map.put(:points, points)
+    |> Map.put(:ship, ship)
   end
 
 

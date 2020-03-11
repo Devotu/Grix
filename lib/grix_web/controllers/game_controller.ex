@@ -31,7 +31,6 @@ defmodule GrixWeb.GameController do
 
 
   def create(conn, params) do
-    IO.inspect(params, label: "params")
     {:ok, squad_1} = Squad.get(params["squad_1"])
     {:ok, squad_2} = Squad.get(params["squad_2"])
 
