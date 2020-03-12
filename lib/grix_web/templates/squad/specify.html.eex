@@ -1,15 +1,13 @@
 <section>
   <%= form_for @conn, Routes.squad_path(@conn, :create), fn f -> %>
     <label>
-      Name: 
+      Name: <%= @squad.name %>
     </label>
-    <p><%= @squad.name %>
     <label>
-      Faction: 
+      Faction: <%= @squad.faction %>
     </label>
-    <p><%= @squad.faction %>
     <label>
-      Archetype: <%= text_input f, :archetype %>
+      Archetype: <%= @squad.archetype %>
     </label>
     <section>
       <label>
