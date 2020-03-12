@@ -6,7 +6,9 @@
   <p><b>XWS:</b> <%= @squad.xws %>
 </section>
 <section>
+  <%= if(Map.has_key?(@conn.assigns, :stats)) do %>
   <h4>Score</h4>
   <p><b>Average:</b> <%= @stats.average %>
   <p><b>Win %:</b> <%= @stats.win_percent %>
+  <% end %>
 </section>

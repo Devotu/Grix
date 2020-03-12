@@ -73,6 +73,22 @@ defmodule GrixWeb.SquadController do
   end
 
   def create(conn, params) do
+    case Squad.create(params["name"], params["faction"], params["archetype"], params["xws"]) do
+      {:ok, id} ->
+        {:ok, squad} = Squad.get(id)
+        conn
+        |> assign(:squad, squad)
+        |> render("show.html")
+      {:error, _kind, msg} ->
+        conn
+        |> put_flash(:error, msg)
+        |> render("new.html")
+      _ ->
+        :error
+    end
+  end
+
+  def from_xws(conn, params) do
     case XWS.is_valid(params["xws"]) do
       :ok ->
         {:ok, squad} = Squad.generate_from_xws(params["xws"])
