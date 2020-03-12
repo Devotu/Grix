@@ -19,6 +19,7 @@ defmodule GrixWeb.SquadController do
     |> render("new.html")
   end
 
+
   def index(conn, _params) do
     case Squad.list() do
       {:ok, list} ->
@@ -88,13 +89,21 @@ defmodule GrixWeb.SquadController do
     end
   end
 
-  def from_xws(conn, params) do
+
+  def new_from_xws(conn, _params) do
+    {:ok, archetypes} = Archetype.list()
+
+    conn
+    |> assign(:archetypes, Html.as_options(archetypes))
+    |> render("new_xws.html")
+  end
+
+  def generate_from_xws(conn, params) do
     case XWS.is_valid(params["xws"]) do
       :ok ->
         {:ok, squad} = Squad.generate_from_xws(params["xws"])
         conn
-        |> assign(:name, squad.name)
-        |> assign(:faction, squad.faction)
+        |> put_session(:xws_squad, squad)
         |> assign(:archetype, params["archetype"])
         |> assign(:xws, squad.xws)
         |> assign(:squad, squad)

@@ -23,6 +23,21 @@
         Force: <%= text_input @form, :forcepower, [value: forcepower.id] %> <%= number_input @form, :forcepower_points, [value: 0] %>
       </label>
     <% end %>
+    <%= for talent <- Enum.filter(@ship.upgrades, &(&1.type == "talent")) do %>
+      <label>
+        Talent: <%= talent.name %> <%= number_input @form, :talent_points, [value: 0] %>
+      </label>
+    <% end %>
+    <%= for crew <- Enum.filter(@ship.upgrades, &(&1.type == "crew")) do %>
+      <label>
+        Crew: <%= text_input @form, :crew, [value: crew.id] %> <%= number_input @form, :crew_points, [value: 0] %>
+      </label>
+    <% end %>
+    <%= for torpedo <- Enum.filter(@ship.upgrades, &(&1.type == "torpedo")) do %>
+      <label>
+        Torpedo: <%= text_input @form, :torpedo, [value: torpedo.id] %> <%= number_input @form, :talent_points, [value: 0] %>
+      </label>
+    <% end %>
   <% end %>
 
 </section>

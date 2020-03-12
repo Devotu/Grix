@@ -19,6 +19,7 @@
         <%= render(GrixWeb.SquadView, "ship.html", %{form: f, ship: ship}) %>
       <% end %>
     </section>
+    <%= button("Cancel", to: "/squads/new", method: :get, class: "button border not submit") %>
     <%= submit("Create", class: "button border do submit") %>
   <% end %>
 </section>

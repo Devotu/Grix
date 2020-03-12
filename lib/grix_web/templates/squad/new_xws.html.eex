@@ -1,0 +1,11 @@
+<section>
+  <%= form_for @conn, Routes.squad_path(@conn, :generate_from_xws), fn f -> %>
+    <label>
+      Archetype: <%= select(f, :archetype, @archetypes) %>
+    </label>
+    <label>
+      XWS: <%= textarea f, :xws %>
+    </label>
+    <%= submit("Submit", class: "button border do submit") %>
+  <% end %>
+</section>

@@ -76,8 +76,10 @@ defmodule Grix.Card do
   def get_or_create_from_xws(category, id) do
     case get(id) do
       {:ok, card} ->
+        IO.inspect(card.name, label: "Card - Found: ")
         card
       {:error, :not_found} ->
+        IO.inspect(id, label: "Card - Created: ")
         create(id, Database.convert_to_name(id), category)
         |> Helpers.without_ok()
         |> get()
