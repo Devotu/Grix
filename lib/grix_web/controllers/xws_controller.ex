@@ -43,12 +43,8 @@ defmodule GrixWeb.XWSController do
     squad_pid = get_session(conn, :xws_squad_pid)
     saved_squad = Agent.get(squad_pid, fn s -> s end)
 
-
-    IO.inspect(params, label: "XWSC - Create params: \n")
-    IO.inspect(saved_squad, label: "XWSC - Create saved squad: \n")
-
     xws_with_points = XWS.update_points(saved_squad, params)
-    IO.inspect(xws_with_points, label: "Updated with points")
+    IO.inspect(xws_with_points, label: "Updated with points: ")
 
 
     redirect(conn, to: Routes.squad_path(conn, :index))
