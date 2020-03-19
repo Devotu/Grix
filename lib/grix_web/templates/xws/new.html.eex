@@ -1,5 +1,5 @@
 <section>
-  <%= form_for @conn, Routes.squad_path(@conn, :generate_from_xws), fn f -> %>
+  <%= form_for @conn, Routes.xws_path(@conn, :generate), fn f -> %>
     <label>
       Archetype: <%= select(f, :archetype, @archetypes) %>
     </label>

@@ -5,7 +5,7 @@ defmodule Grix.Squad do
   alias Grix.Ship
   alias Grix.XWS
 
-  defstruct id: "", name: "", archetype: "", faction: "", xws: "", points: 0, ships: []
+  defstruct id: "", name: "", guid: "", archetype: "", faction: "", xws: "", points: 0, ships: []
 
 
   def generate("", _, _, _), do: {:error, :missing_parameter, "name"}
@@ -14,8 +14,7 @@ defmodule Grix.Squad do
 
   def generate(name, faction, archetype, xws_string) do
     guid = Helpers.generate_guid()
-    xws = XWS.parse(xws_string)
-    {:ok, %Squad{id: guid, name: name, archetype: archetype, faction: faction, xws: xws}}
+    {:ok, %Squad{id: guid, name: name, archetype: archetype, faction: faction, xws: xws_string}}
   end
 
 

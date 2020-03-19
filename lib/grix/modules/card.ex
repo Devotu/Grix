@@ -3,7 +3,7 @@ defmodule Grix.Card do
   alias Grix.Helpers.Database
   alias Grix.Card
 
-  defstruct id: "", name: "", type: "", points: 0
+  defstruct id: "", name: "", guid: "", type: "", points: 0
 
 
 
@@ -87,6 +87,10 @@ defmodule Grix.Card do
       _ ->
         {:error, :card_error}
     end
+  end
+
+  def assign_guid(%Card{} = c) do
+    Map.put(c, :guid, Helpers.generate_guid())
   end
 
 

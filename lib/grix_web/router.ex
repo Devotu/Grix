@@ -26,11 +26,14 @@ defmodule GrixWeb.Router do
 
     get "/squads", SquadController, :index
     get "/squads/new", SquadController, :new
-    get "/squads/new/xws", SquadController, :new_from_xws
     get "/squads/specify", SquadController, :specify
     get "/squads/:id", SquadController, :show
     post "/squads", SquadController, :create
-    post "/squads/xws", SquadController, :generate_from_xws
+
+    get "/squads/xws/new", XWSController, :new
+    post "/squads/xws/generate", XWSController, :generate
+    get "/squads/xws/specify", XWSController, :specify
+    post "/squads/xws", XWSController, :create
 
     get "/games/new", GameController, :new
     get "/games/:id", GameController, :show

@@ -1,5 +1,5 @@
 <section>
-  <%= form_for @conn, Routes.squad_path(@conn, :create), fn f -> %>
+  <%= form_for @conn, Routes.xws_path(@conn, :create), fn f -> %>
     <label>
       Name: <%= @squad.name %>
     </label>
@@ -14,7 +14,7 @@
         Specification
       </label>
       <%= for ship <- @squad.ships do %>
-        <%= render(GrixWeb.SquadView, "ship.html", %{form: f, ship: ship}) %>
+        <%= render(GrixWeb.XWSView, "ship.html", %{form: f, ship: ship}) %>
       <% end %>
     </section>
     <%= button("Cancel", to: "/squads/new", method: :get, class: "button border not submit") %>

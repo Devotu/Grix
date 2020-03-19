@@ -88,34 +88,4 @@ defmodule GrixWeb.SquadController do
         :error
     end
   end
-
-
-  def new_from_xws(conn, _params) do
-    {:ok, archetypes} = Archetype.list()
-
-    conn
-    |> assign(:archetypes, Html.as_options(archetypes))
-    |> render("new_xws.html")
-  end
-
-  def generate_from_xws(conn, params) do
-    case XWS.is_valid(params["xws"]) do
-      :ok ->
-        {:ok, squad} = Squad.generate_from_xws(params["xws"])
-        conn
-        |> put_session(:xws_squad, squad)
-        |> assign(:archetype, params["archetype"])
-        |> assign(:xws, squad.xws)
-        |> assign(:squad, squad)
-        |> render("specify.html")
-      {:error, msg} ->
-        conn
-        |> put_flash(:error, msg)
-        |> new(nil)
-      _ ->
-        conn
-        |> put_flash(:error, "Could not parse xws")
-        |> new(nil)
-    end
-  end
 end

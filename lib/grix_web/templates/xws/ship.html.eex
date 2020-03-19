@@ -3,9 +3,12 @@
     <%= @ship.name %>: <%= @ship.points %>
   </h3>
   
-  <h4>
-    Ship: <%= @ship.ship %> <%= number_input @form, :ship_points, [value: @ship.points] %>
-  </h4>
+  <%= for pilot <- Enum.filter(@ship.upgrades, &(&1.type == "pilot")) do %>
+    <h4>
+      Ship (pilot): <%= pilot.name  %> <%= number_input @form, pilot.guid, [value: @ship.points] %>
+    </h4>
+  <% end %>
+
   
   <%= if(@ship.upgrades != nil) do%>
     <%= for modification <- Enum.filter(@ship.upgrades, &(&1.type == "modification")) do %>
@@ -25,7 +28,7 @@
     <% end %>
     <%= for talent <- Enum.filter(@ship.upgrades, &(&1.type == "talent")) do %>
       <h5>
-        Talent: <%= talent.name %> <%= number_input @form, :talent_points, [value: 0] %>
+        Talent: <%= talent.name %> <%= number_input @form, talent.guid, [value: 0] %>
       </h5>
     <% end %>
     <%= for crew <- Enum.filter(@ship.upgrades, &(&1.type == "crew")) do %>
