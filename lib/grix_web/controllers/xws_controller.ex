@@ -46,6 +46,9 @@ defmodule GrixWeb.XWSController do
     xws_with_points = XWS.update_points(saved_squad, params)
     IO.inspect(xws_with_points, label: "Updated with points: ")
 
+    ###Save
+
+
 
     redirect(conn, to: Routes.squad_path(conn, :index))
   end
