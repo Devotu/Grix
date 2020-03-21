@@ -89,9 +89,6 @@ defmodule Grix.Card do
     end
   end
 
-  def assign_guid(%Card{} = c) do
-    Map.put(c, :guid, Helpers.generate_guid())
-  end
 
 
   #Helpers
@@ -102,9 +99,19 @@ defmodule Grix.Card do
   defp node_to_card(node) do
     data_map = Helpers.atomize_keys(node["card"])
     struct(Card, data_map)
-    |> Map.put(:type, select_type(data_map))
+    |> assign_guid()
+    |> assign_type(data_map)
   end
 
+
+  def assign_guid(%Card{} = c) do
+    Map.put(c, :guid, Helpers.generate_guid())
+  end
+
+
+  def assign_type(%Card{} = c, data_map) do
+    Map.put(c, :type, select_type(data_map))
+  end
 
   defp select_type(%{tags: tags}) do
     tags
@@ -114,4 +121,19 @@ defmodule Grix.Card do
   end
 
   defp select_type(_), do: ""
+
+
+  def write_persist_match(%Card{} = c) do
+    "(#{c.guid}:#{Database.convert_to_label(c.type)})"
+  end
+
+
+  def write_persist_and(%Card{} = c) do
+    "AND #{c.guid}.id = \"#{c.id}\""
+  end
+
+
+  def write_persist_create(%Card{} = c) do
+    "(s)-[:Use {points: #{c.points}}]->(#{c.guid})"
+  end
 end
