@@ -17,4 +17,20 @@ defmodule Grix.ShipTest do
     upgraded_ship = Ship.assign_upgrades(ship, upgrades)
     assert 3 == Enum.count(upgraded_ship.upgrades)
   end
+
+
+  test "write query persist" do
+    ship_name = "Persisted ship"
+    ship = Ship.generate(ship_name)
+    {:ok, upgrades} = Card.get(["redsquadronveteran", "crackshot", "r3astromech"])
+    {:ok, upgrades} = Card.get(["redsquadronveteran", "crackshot", "r3astromech"])
+    upgraded_ship = Ship.assign_upgrades(ship, upgrades)
+
+    query = Ship.write_persist_query(upgraded_ship)
+
+    assert query ==
+    """
+      (sq)-[:Includes]->(s:Ship {id:"#{ship.id}", name:"#{ship_name}", created:TIMESTAMP()})
+    """
+  end
 end

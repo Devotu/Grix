@@ -57,4 +57,11 @@ defmodule Grix.Ship do
     |> Enum.map(&(&1.points))
     |> Enum.sum()
   end
+
+
+  def write_persist_query(%Ship{} = ship) do
+    """
+      (sq)-[:Includes]->(s:Ship {id:"#{ship.id}", name:"#{ship.name}", created:TIMESTAMP()})
+    """
+  end
 end
