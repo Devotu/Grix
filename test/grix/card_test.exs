@@ -21,20 +21,24 @@ defmodule Grix.CardTest do
 
 
   test "write match query" do
-    {_status, cards} = Card.get(["crackshot", "brilliantevasion"])
-    [c1, c2] = cards
+    {:ok, c1} = Card.get("crackshot")
+    {:ok, c2} = Card.get("brilliantevasion")
+    {:ok, c3} = Card.get("redsquadronveteran")
 
-    assert "(#{c1.guid}:Talent)" == Card.write_persist_match(c1)
-    assert "(#{c2.guid}:Force)" == Card.write_persist_match(c2)
+    IO.inspect(Card.write_persist_match(c3), label: "c3:\n")
+
+    assert "(#{c1.id}:Talent)" == Card.write_persist_match(c1)
+    assert "(#{c2.id}:Force)" == Card.write_persist_match(c2)
+    assert "(#{c3.id}:Pilot)" == Card.write_persist_match(c3)
   end
 
 
   test "write and query" do
-    {_status, cards} = Card.get(["crackshot", "brilliantevasion"])
+    {_status, cards} = Card.get(["brilliantevasion", "crackshot"])
     [c1, c2] = cards
 
-    assert  "AND #{c1.guid}.id = \"crackshot\"" == Card.write_persist_and(c1)
-    assert  "AND #{c2.guid}.id = \"brilliantevasion\"" == Card.write_persist_and(c2)
+    assert  "#{c1.id}.id = \"brilliantevasion\"" == Card.write_persist_where(c1)
+    assert  "#{c2.id}.id = \"crackshot\"" == Card.write_persist_where(c2)
   end
 
   test "write create query" do
@@ -43,7 +47,7 @@ defmodule Grix.CardTest do
     c1 = Map.put(c1, :points, 1)
     c2 = Map.put(c2, :points, 3)
 
-    assert "(s)-[:Use {points: 1}]->(#{c1.guid})" == Card.write_persist_create(c1)
-    assert "(s)-[:Use {points: 3}]->(#{c2.guid})" == Card.write_persist_create(c2)
+    assert "(s)-[:Use {points: 1}]->(#{c1.id})" == Card.write_persist_create(c1)
+    assert "(s)-[:Use {points: 3}]->(#{c2.id})" == Card.write_persist_create(c2)
   end
 end

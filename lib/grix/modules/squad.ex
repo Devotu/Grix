@@ -78,6 +78,40 @@ defmodule Grix.Squad do
   end
 
 
+  def persist_ships(%Squad{} = squad) do
+
+    IO.inspect(squad.ships, label: "ships: \n")
+
+    Enum.each(squad.ships, fn s -> Ship.persist_ship(s, squad.id) end)
+
+    match_q = "MATCH (sq:Squad)"
+    match_cards_q = "(pilot:Pilot), (force:Force), (astromech:Astromech), (torpedo:Torpedo)"
+    where_q = "WHERE sq.id = \"#{squad.id}\""
+    where_cards_q = "AND pilot.id = \"lukeskywalker\" AND force.id = \"brilliantevasion\""
+    create_q = "CREATE (sq)-[:Includes]->(s:Ship {id:\"ship1hash\", name:\"Luke Skywalker\", created:TIMESTAMP()})"
+    create_cards_q = "(s)-[:Use {points: 62}]->(pilot), (s)-[:Use {points: 3}]->(force)"
+
+    query = """
+    MATCH
+      (sq:Squad), (pilot:Pilot), (force:Force), (astromech:Astromech), (torpedo:Torpedo)
+    WHERE
+      sq.id = "#{squad.id}"
+      AND pilot.id = "lukeskywalker"
+      AND force.id = "brilliantevasion"
+      AND astromech.id = "r3astromech"
+      AND torpedo.id = "protontorpedoes"
+    CREATE
+      (sq)-[:Includes]->(s:Ship {id:"ship1hash", name:"Luke Skywalker", created:TIMESTAMP()}),
+      (s)-[:Use {points: 62}]->(pilot),
+      (s)-[:Use {points: 3}]->(force),
+      (s)-[:Use {points: 3}]->(astromech),
+      (s)-[:Use {points: 13}]->(torpedo);
+    """
+
+    # Database.create(query, guid)
+  end
+
+
   def list() do
     query = """
     MATCH

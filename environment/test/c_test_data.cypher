@@ -70,7 +70,7 @@ MATCH
   (at:Archetype), (f:Faction), (pu:PointsUpdate)  
 WHERE 
   at.id = "swarm" 
-  AND f.id = "empire" 
+  AND f.id = "rebel" 
   AND pu.id = "pointsupdate20192"
 CREATE 
   (f)<-[:Belongs]-

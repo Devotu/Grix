@@ -124,16 +124,16 @@ defmodule Grix.Card do
 
 
   def write_persist_match(%Card{} = c) do
-    "(#{c.guid}:#{Database.convert_to_label(c.type)})"
+    "(#{c.id}:#{Database.convert_to_label(c.type)})"
   end
 
 
-  def write_persist_and(%Card{} = c) do
-    "AND #{c.guid}.id = \"#{c.id}\""
+  def write_persist_where(%Card{} = c) do
+    "#{c.id}.id = \"#{c.id}\""
   end
 
 
   def write_persist_create(%Card{} = c) do
-    "(s)-[:Use {points: #{c.points}}]->(#{c.guid})"
+    "(s)-[:Use {points: #{c.points}}]->(#{c.id})"
   end
 end

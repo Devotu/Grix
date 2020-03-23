@@ -64,4 +64,31 @@ defmodule Grix.Ship do
       (sq)-[:Includes]->(s:Ship {id:"#{ship.id}", name:"#{ship.name}", created:TIMESTAMP()})
     """
   end
+
+
+  def persist_ship(%Ship{} = ship, squad_id) do
+    match_q = " MATCH \n (sq:Squad), " #OK
+    match_cards_q = ship.upgrades #"(pilot:Pilot), (force:Force), (astromech:Astromech), (torpedo:Torpedo)"
+      |> Enum.map(&Card.write_persist_match/1)
+      |> Enum.join(", ")
+
+    where_q = " WHERE \n sq.id = \"#{squad_id}\" \n AND " #OK
+    where_cards_q = ship.upgrades #" AND pilot.id = \"lukeskywalker\" AND force.id = \"brilliantevasion\""
+    |> Enum.map(&Card.write_persist_where/1)
+    |> Enum.join("\n AND ")
+
+    create_q = " CREATE \n (sq)-[:Includes]->(s:Ship {id:\"#{ship.id}\", name:\"#{ship.name}\", created:TIMESTAMP()}), \n" #OK
+    create_cards_q = ship.upgrades #"(s)-[:Use {points: 62}]->(pilot), (s)-[:Use {points: 3}]->(force)"
+    |> Enum.map(&Card.write_persist_create/1)
+    |> Enum.join("\n, ")
+
+    query = match_q <> match_cards_q <> where_q <> where_cards_q <> create_q <> create_cards_q
+
+    IO.inspect(query, label: "ship query: \n")
+    IO.puts(query)
+
+    response = Database.run(query)
+    IO.inspect(response, label: "\nResponse: ")
+    response
+  end
 end

@@ -3,6 +3,7 @@ defmodule Grix.SquadTest do
   alias Grix.Squad
   alias Grix.Ship
   alias Grix.Card
+  alias Grix.Helpers.General, as: Helpers
 
   test "create squad" do
     name = "Squad 3"
@@ -138,6 +139,29 @@ defmodule Grix.SquadTest do
     {status, result} = Squad.assign_ships(squad, ships)
     assert :error == status
     assert :point_limit_exceeded == result
+  end
+
+
+  test "persist ships" do
+    upgrades = [
+      %Card{id: "redsquadronveteran", name: "Red Squadron Veteran", type: "Pilot", points: 41},
+      %Card{id: "crackshot", name: "Crack shot", type: "Talent", points: 1},
+      %Card{id: "protontorpedoes", name: "Proton Torpedoes", type: "Torpedo", points: 13},
+    ]
+
+    ships = [
+      %Ship{id: Helpers.generate_guid(), name: "Red Four", upgrades: upgrades},
+      %Ship{id: Helpers.generate_guid(), name: "Red Five", upgrades: upgrades},ĸ
+      %Ship{id: Helpers.generate_guid(), name: "Red Six", upgrades: upgrades}
+    ]
+
+    squad = %Squad{id: "squad2hash", name: "Squad 2", archetype: "Swarm", faction: "Rebel"}
+
+    {:ok, squad_with_ships} = Squad.assign_ships(squad, ships)
+
+    {status, squad_with_persisted_ships} = Squad.persist_ships(squad_with_ships)
+
+    assert :ok == status
   end
 
 end
