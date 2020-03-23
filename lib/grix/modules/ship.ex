@@ -84,11 +84,12 @@ defmodule Grix.Ship do
 
     query = match_q <> match_cards_q <> where_q <> where_cards_q <> create_q <> create_cards_q
 
-    IO.inspect(query, label: "ship query: \n")
-    IO.puts(query)
-
     response = Database.run(query)
-    IO.inspect(response, label: "\nResponse: ")
-    response
+
+    case response.stats["nodes-created"] do
+      1 -> :ok
+      0 -> {:error, :insert_failure}
+      _ -> {:error, :unknown_error}
+    end
   end
 end

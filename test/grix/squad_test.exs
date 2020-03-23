@@ -151,7 +151,7 @@ defmodule Grix.SquadTest do
 
     ships = [
       %Ship{id: Helpers.generate_guid(), name: "Red Four", upgrades: upgrades},
-      %Ship{id: Helpers.generate_guid(), name: "Red Five", upgrades: upgrades},ĸ
+      %Ship{id: Helpers.generate_guid(), name: "Red Five", upgrades: upgrades},
       %Ship{id: Helpers.generate_guid(), name: "Red Six", upgrades: upgrades}
     ]
 
@@ -159,9 +159,7 @@ defmodule Grix.SquadTest do
 
     {:ok, squad_with_ships} = Squad.assign_ships(squad, ships)
 
-    {status, squad_with_persisted_ships} = Squad.persist_ships(squad_with_ships)
-
-    assert :ok == status
+    assert :ok == Squad.persist_ships(squad_with_ships)
   end
 
 end
