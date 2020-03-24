@@ -52,6 +52,14 @@ defmodule Grix.Ship do
   end
 
 
+  def find_frame(upgrades) when is_list(upgrades) do
+    upgrades
+    |> Enum.filter(fn c -> c.type == "pilot" end)
+    |> List.first()
+    |> Card.find_frame()
+  end
+
+
   def count_points(%Ship{} = ship) do
     ship.upgrades
     |> Enum.map(&(&1.points))

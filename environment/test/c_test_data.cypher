@@ -15,7 +15,7 @@ CREATE
 
 
 CREATE
-  (:Card:Pilot {id:"lukeskywalker", name:"Luke Skywalker", created:TIMESTAMP()})-[:Flies]->(:Ship {id:"t65xwing", name:"T-65 X-Wing", created:TIMESTAMP()}),
+  (:Card:Pilot {id:"lukeskywalker", name:"Luke Skywalker", created:TIMESTAMP()})-[:Flies]->(:Frame {id:"t65xwing", name:"T-65 X-Wing", created:TIMESTAMP()}),
   (:Card:Force {id:"brilliantevasion", name:"Brillian Evasion", created:TIMESTAMP()}),
   (:Card:Astromech {id:"r3astromech", name:"R3 Astromech", created:TIMESTAMP()}),
   (:Card:Torpedo {id:"protontorpedoes", name:"Proton Torpedoes", created:TIMESTAMP()});

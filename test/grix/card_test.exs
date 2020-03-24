@@ -50,4 +50,10 @@ defmodule Grix.CardTest do
     assert "(s)-[:Use {points: 1}]->(#{c1.id})" == Card.write_persist_create(c1)
     assert "(s)-[:Use {points: 3}]->(#{c2.id})" == Card.write_persist_create(c2)
   end
+
+
+  test "find frame" do
+    {:ok, card} = Card.get("lukeskywalker")
+    assert {:ok, "t65xwing"} == Card.find_frame(card)
+  end
 end

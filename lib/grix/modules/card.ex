@@ -123,6 +123,23 @@ defmodule Grix.Card do
   defp select_type(_), do: ""
 
 
+  def find_frame(%Card{} = c) do
+    query = """
+    MATCH
+      (c:Card)-[:Flies]->(f:Frame)
+    WHERE
+      c.id = "#{c.id}"
+    RETURN
+      f.id AS id
+    """
+
+    Database.get(query)
+    |> Map.get(:results)
+    |> Enum.map(&(&1["id"]))
+    |> Helpers.return_expected_single
+  end
+
+
   def write_persist_match(%Card{} = c) do
     "(#{c.id}:#{Database.convert_to_label(c.type)})"
   end
