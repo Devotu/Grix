@@ -59,13 +59,6 @@ defmodule Grix.Ship do
   end
 
 
-  def write_persist_query(%Ship{} = ship) do
-    """
-      (sq)-[:Includes]->(s:Ship {id:"#{ship.id}", name:"#{ship.name}", created:TIMESTAMP()})
-    """
-  end
-
-
   def persist_ship(%Ship{} = ship, squad_id) do
     match_q = " MATCH \n (sq:Squad), " #OK
     match_cards_q = ship.upgrades #"(pilot:Pilot), (force:Force), (astromech:Astromech), (torpedo:Torpedo)"
