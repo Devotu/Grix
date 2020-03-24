@@ -23,7 +23,7 @@ defmodule Grix.XWSTest do
           id: "viju-qfgf-lvvl-pdtk",
           name: "Greensquadronpilot",
           points: 35,
-          ship: "rz1awing",
+          frame: "rz1awing",
           upgrades: [
             %Grix.Card{
               guid: "kqgu-afxt-jube-sqmw",
@@ -52,7 +52,7 @@ defmodule Grix.XWSTest do
           id: "gwnp-odgh-eblu-ygbt",
           name: "Greensquadronpilot",
           points: 35,
-          ship: "rz1awing",
+          frame: "rz1awing",
           upgrades: [
             %Grix.Card{
               guid: "tils-szfu-kchs-xdnp",
