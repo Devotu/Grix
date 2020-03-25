@@ -41,6 +41,7 @@ defmodule Grix.Ship do
     case upgrades_are_valid(ship, upgrades) do
       :ok ->
         %{ship | :upgrades => upgrades}
+        |> assign_frame(upgrades)
       _ ->
         {:error, :invalid_upgrades}
     end
@@ -53,7 +54,12 @@ defmodule Grix.Ship do
 
 
   defp assign_frame(%Ship{} = ship, upgrades) when is_list(upgrades) do
-    {:ok, frame_id} = find_frame(upgrades)
+    case find_frame(upgrades) do
+      {:ok, frame} ->
+        %{ship | :frame => frame.id}
+      _ ->
+        ship
+    end
   end
 
 
