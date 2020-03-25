@@ -52,6 +52,11 @@ defmodule Grix.Ship do
   end
 
 
+  defp assign_frame(%Ship{} = ship, upgrades) when is_list(upgrades) do
+    {:ok, frame_id} = find_frame(upgrades)
+  end
+
+
   def find_frame(upgrades) when is_list(upgrades) do
     upgrades
     |> Enum.filter(fn c -> c.type == "pilot" end)

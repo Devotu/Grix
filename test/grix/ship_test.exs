@@ -14,7 +14,7 @@ defmodule Grix.ShipTest do
 
   test "assign upgrades" do
     ship = Ship.generate("The ship")
-    {:ok, upgrades} = Card.get(["lukeskywalker", "protontorpedoes", "r3astromech"])
+    {:ok, upgrades} = Card.get(["lukeskywalker", "protontorpedoes", "r3astromech"]) #Luke has the frame
     upgraded_ship = Ship.assign_upgrades(ship, upgrades)
     assert 3 == Enum.count(upgraded_ship.upgrades)
     assert "t65xwing" == upgraded_ship.frame
@@ -23,6 +23,7 @@ defmodule Grix.ShipTest do
 
   test "find frame" do
     {:ok, upgrades} = Card.get(["lukeskywalker", "crackshot", "r3astromech"]) #Luke has the frame
-    assert {:ok, "t65xwing"} = Ship.find_frame(upgrades)
+    assert {:ok, frame} = Ship.find_frame(upgrades)
+    assert "T-65 X-Wing" == frame.name
   end
 end

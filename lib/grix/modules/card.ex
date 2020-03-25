@@ -2,6 +2,7 @@ defmodule Grix.Card do
   alias Grix.Helpers.General, as: Helpers
   alias Grix.Helpers.Database
   alias Grix.Card
+  alias Grix.Frame
 
   defstruct id: "", name: "", guid: "", type: "", points: 0
 
@@ -136,7 +137,8 @@ defmodule Grix.Card do
     Database.get(query)
     |> Map.get(:results)
     |> Enum.map(&(&1["id"]))
-    |> Helpers.return_expected_single
+    |> List.first()
+    |> Frame.get()
   end
 
 

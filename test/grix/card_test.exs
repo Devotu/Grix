@@ -54,6 +54,7 @@ defmodule Grix.CardTest do
 
   test "find frame" do
     {:ok, card} = Card.get("lukeskywalker")
-    assert {:ok, "t65xwing"} == Card.find_frame(card)
-  end
+    {:ok, frame} = Card.find_frame(card)
+    assert "t65xwing" == frame.id
+    end
 end
