@@ -22,7 +22,6 @@ defmodule Grix.Squad do
     {:ok, xws} = XWS.parse(xws_string)
     {:ok, squad} = generate(xws["name"], xws["faction"], "none", xws_string)
     ships = Enum.map(xws["pilots"], &Ship.generate_from_xws_pilot/1)
-    IO.inspect(ships, label: "ships")
     assign_ships(squad, ships)
 
     squad

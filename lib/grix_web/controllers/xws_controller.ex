@@ -22,7 +22,6 @@ defmodule GrixWeb.XWSController do
         {:ok, squad} = Squad.generate_from_xws(params["xws"])
         translated_squad = XWS.translate_squad(squad)
         {:ok, squad_pid} = Agent.start_link(fn -> translated_squad end)
-        IO.inspect(squad_pid, label: "saved squad")
 
         conn
         |> put_session(:xws_squad_pid, squad_pid)
@@ -45,7 +44,6 @@ defmodule GrixWeb.XWSController do
     saved_squad = Agent.get(squad_pid, fn s -> s end)
 
     xws_with_points = XWS.update_points(saved_squad, params)
-    IO.inspect(xws_with_points, label: "Updated with points: ")
 
     {:ok, squad_id} = Squad.create(saved_squad.name, saved_squad.faction, saved_squad.archetype, saved_squad.xws)
     squad_with_id = %{xws_with_points | :id => squad_id}

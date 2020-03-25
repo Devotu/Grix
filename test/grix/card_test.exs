@@ -29,8 +29,6 @@ defmodule Grix.CardTest do
     {:ok, c2} = Card.get("brilliantevasion")
     {:ok, c3} = Card.get("redsquadronveteran")
 
-    IO.inspect(Card.write_persist_match(c3), label: "c3:\n")
-
     assert "(#{c1.id}:Talent)" == Card.write_persist_match(c1)
     assert "(#{c2.id}:Force)" == Card.write_persist_match(c2)
     assert "(#{c3.id}:Pilot)" == Card.write_persist_match(c3)
