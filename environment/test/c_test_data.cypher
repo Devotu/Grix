@@ -37,7 +37,7 @@ CREATE
 
 
 MATCH
-  (s:Ship)
+  (s:Frame)
 WHERE
   s.id = "t65xwing"
 CREATE
