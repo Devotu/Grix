@@ -12,6 +12,10 @@ defmodule Grix.CardTest do
     assert "Crack Shot" == card.name
   end
 
+  test "get Card does not exist" do
+    assert {:error, :not_found} == Card.get("bumpyride")
+  end
+
   test "get Cards" do
     {status, cards} = Card.get(["crackshot", "brilliantevasion"])
     assert :ok == status

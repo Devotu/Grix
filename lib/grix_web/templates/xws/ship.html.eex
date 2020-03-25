@@ -13,17 +13,17 @@
   <%= if(@ship.upgrades != nil) do%>
     <%= for modification <- Enum.filter(@ship.upgrades, &(&1.type == "modification")) do %>
       <h5>
-        Modification: <%= modification.name %> <%= number_input @form, :modification_points, [value: 0] %>
+        Modification: <%= modification.name %> <%= number_input @form, modification.guid, [value: 0] %>
       </h5>
     <% end %>
     <%= for sensor <- Enum.filter(@ship.upgrades, &(&1.type == "sensor")) do %>
       <h5>
-        Sensor: <%= sensor.name %>  <%= number_input @form, :sensor_points, [value: 0] %>
+        Sensor: <%= sensor.name %>  <%= number_input @form, sensor.guid, [value: 0] %>
       </h5>
     <% end %>
     <%= for forcepower <- Enum.filter(@ship.upgrades, &(&1.type == "forcepower")) do %>
       <h5>
-        Force: <%= forcepower.name %> <%= number_input @form, :forcepower_points, [value: 0] %>
+        Force: <%= forcepower.name %> <%= number_input @form, forcepower.guid, [value: 0] %>
       </h5>
     <% end %>
     <%= for talent <- Enum.filter(@ship.upgrades, &(&1.type == "talent")) do %>
@@ -33,12 +33,17 @@
     <% end %>
     <%= for crew <- Enum.filter(@ship.upgrades, &(&1.type == "crew")) do %>
       <h5>
-        Crew: <%= crew.name %> <%= number_input @form, :crew_points, [value: 0] %>
+        Crew: <%= crew.name %> <%= number_input @form, crew.guid, [value: 0] %>
       </h5>
     <% end %>
     <%= for torpedo <- Enum.filter(@ship.upgrades, &(&1.type == "torpedo")) do %>
       <h5>
-        Torpedo: <%= torpedo.name %> <%= number_input @form, :talent_points, [value: 0] %>
+        Torpedo: <%= torpedo.name %> <%= number_input @form, torpedo.guid, [value: 0] %>
+      </h5>
+    <% end %>
+    <%= for device <- Enum.filter(@ship.upgrades, &(&1.type == "device")) do %>
+      <h5>
+        Device: <%= device.name %> <%= number_input @form, device.guid, [value: 0] %>
       </h5>
     <% end %>
   <% end %>

@@ -32,4 +32,17 @@ defmodule Grix.XWS do
   defp set_upgrade_points(%Card{} = card, %{} = points_map) do
     Map.put(card, :points, points_map[card.guid] |> String.to_integer())
   end
+
+
+  def translate_squad(%Squad{} = squad) do
+    Map.put(squad, :faction, translate_faction(squad.faction))
+  end
+
+  defp translate_faction("rebelalliance"), do: "rebel"
+  defp translate_faction("galacticempire"), do: "empire"
+  defp translate_faction("scumandvillainy"), do: "scum"
+  defp translate_faction("resistance"), do: "resistance"
+  defp translate_faction("firstorder"), do: "order"
+  defp translate_faction("galacticrepublic"), do: "republic"
+  defp translate_faction("separatistalliance"), do: "separatist"
 end

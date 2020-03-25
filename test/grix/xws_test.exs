@@ -2,6 +2,7 @@ defmodule Grix.XWSTest do
   use ExUnit.Case
   alias Grix.XWS
   alias Grix.Ship
+  alias Grix.Card
 
   test "parse" do
     xws = """
@@ -98,11 +99,86 @@ defmodule Grix.XWSTest do
     second_upgrade = Enum.at(first_ship.upgrades, 1)
     third_upgrade = Enum.at(first_ship.upgrades, 2)
 
-    IO.inspect(first_ship, label: "first ship: ")
-
     assert 3 == first_upgrade.points
     assert 4 == second_upgrade.points
     assert 29 == third_upgrade.points
+    assert "rz1awing" == first_ship.frame
+  end
+
+
+  test "translate squad" do
+    xws_squad = %Grix.Squad{
+      archetype: "none",
+      faction: "rebelalliance",
+      guid: "",
+      id: "bybi-imfv-vqrm-pqkz",
+      name: "Unnamed Squadron",
+      points: 70,
+      ships: [
+        %Grix.Ship{
+          id: "viju-qfgf-lvvl-pdtk",
+          name: "Greensquadronpilot",
+          points: 35,
+          frame: "rz1awing",
+          upgrades: [
+            %Grix.Card{
+              guid: "kqgu-afxt-jube-sqmw",
+              id: "crackshot",
+              name: "Crack Shot",
+              points: 0,
+              type: "talent"
+            },
+            %Grix.Card{
+              guid: "bzkd-letc-wunf-tbjn",
+              id: "predator",
+              name: "Predator",
+              points: 0,
+              type: "talent"
+            },
+            %Grix.Card{
+              guid: "hsqz-umas-uesg-gwko",
+              id: "greensquadronpilot",
+              name: "Greensquadronpilot",
+              points: 0,
+              type: "pilot"
+            }
+          ]
+        },
+        %Grix.Ship{
+          id: "gwnp-odgh-eblu-ygbt",
+          name: "Greensquadronpilot",
+          points: 35,
+          frame: "rz1awing",
+          upgrades: [
+            %Grix.Card{
+              guid: "tils-szfu-kchs-xdnp",
+              id: "crackshot",
+              name: "Crack Shot",
+              points: 0,
+              type: "talent"
+            },
+            %Grix.Card{
+              guid: "zsmn-zizy-llel-qdmz",
+              id: "daredevil",
+              name: "Daredevil",
+              points: 0,
+              type: "talent"
+            },
+            %Grix.Card{
+              guid: "pysr-hofx-ndld-zbhs",
+              id: "greensquadronpilot",
+              name: "Greensquadronpilot",
+              points: 0,
+              type: "pilot"
+            }
+          ]
+        }
+      ],
+      xws: "{\"description\":\"\",\"faction\":\"rebelalliance\",\"name\":\"Unnamed Squadron\",\"pilots\":[{\"id\":\"greensquadronpilot\",\"name\":\"greensquadronpilot\",\"points\":35,\"ship\":\"rz1awing\",\"upgrades\":{\"talent\":[\"crackshot\",\"predator\"]}},{\"id\":\"greensquadronpilot\",\"name\":\"greensquadronpilot\",\"points\":35,\"ship\":\"rz1awing\",\"upgrades\":{\"talent\":[\"crackshot\",\"daredevil\"]}}],\"points\":70,\"vendor\":{\"yasb\":{\"builder\":\"Yet Another Squad Builder 2.0\",\"builder_url\":\"https://raithos.github.io/\",\"link\":\"https://raithos.github.io/?f=Rebel%20Alliance&d=v8ZsZ200Z52X116W127WY52X116W117W&sn=Unnamed%20Squadron&obs=\"}},\"version\":\"2.0.0\"}"
+    }
+
+    translated_squad = XWS.translate_squad(xws_squad)
+    assert "rebel" == translated_squad.faction
   end
 
 end

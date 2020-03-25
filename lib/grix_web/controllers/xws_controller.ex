@@ -20,7 +20,8 @@ defmodule GrixWeb.XWSController do
     case XWS.is_valid(params["xws"]) do
       :true ->
         {:ok, squad} = Squad.generate_from_xws(params["xws"])
-        {:ok, squad_pid} = Agent.start_link(fn -> squad end)
+        translated_squad = XWS.translate_squad(squad)
+        {:ok, squad_pid} = Agent.start_link(fn -> translated_squad end)
         IO.inspect(squad_pid, label: "saved squad")
 
         conn
@@ -46,9 +47,9 @@ defmodule GrixWeb.XWSController do
     xws_with_points = XWS.update_points(saved_squad, params)
     IO.inspect(xws_with_points, label: "Updated with points: ")
 
-    ###Save
-
-
+    {:ok, squad_id} = Squad.create(saved_squad.name, saved_squad.faction, saved_squad.archetype, saved_squad.xws)
+    squad_with_id = %{xws_with_points | :id => squad_id}
+    :ok = Squad.persist_ships(squad_with_id)
 
     redirect(conn, to: Routes.squad_path(conn, :index))
   end
