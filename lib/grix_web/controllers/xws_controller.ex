@@ -2,7 +2,6 @@ defmodule GrixWeb.XWSController do
   use GrixWeb, :controller
 
   alias Grix.Squad
-  alias Grix.Ship
   alias Grix.Archetype
   alias Grix.XWS
   alias Grix.Helpers.Html

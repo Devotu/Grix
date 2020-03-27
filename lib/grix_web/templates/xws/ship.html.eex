@@ -46,6 +46,16 @@
         Device: <%= device.name %> <%= number_input @form, device.guid, [value: 0] %>
       </h5>
     <% end %>
+    <%= for illicit <- Enum.filter(@ship.upgrades, &(&1.type == "illicit")) do %>
+      <h5>
+        Device: <%= illicit.name %> <%= number_input @form, illicit.guid, [value: 0] %>
+      </h5>
+    <% end %>
+    <%= for gunner <- Enum.filter(@ship.upgrades, &(&1.type == "gunner")) do %>
+      <h5>
+        Device: <%= gunner.name %> <%= number_input @form, gunner.guid, [value: 0] %>
+      </h5>
+    <% end %>
   <% end %>
 
 </section>
