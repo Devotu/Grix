@@ -36,11 +36,11 @@ defmodule Grix.CardTest do
 
 
   test "write and query" do
-    {_status, cards} = Card.get(["brilliantevasion", "crackshot"])
-    [c1, c2] = cards
+    {:ok, c1} = Card.get("crackshot")
+    {:ok, c2} = Card.get("brilliantevasion")
 
-    assert  "#{c1.id}.id = \"brilliantevasion\"" == Card.write_persist_where(c1)
-    assert  "#{c2.id}.id = \"crackshot\"" == Card.write_persist_where(c2)
+    assert  "#{c1.id}.id = \"crackshot\"" == Card.write_persist_where(c1)
+    assert  "#{c2.id}.id = \"brilliantevasion\"" == Card.write_persist_where(c2)
   end
 
   test "write create query" do
