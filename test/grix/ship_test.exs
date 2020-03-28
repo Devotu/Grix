@@ -26,4 +26,13 @@ defmodule Grix.ShipTest do
     assert {:ok, frame} = Ship.find_frame(upgrades)
     assert "T-65 X-Wing" == frame.name
   end
+
+
+  test "get ships" do
+    {:ok, ships} = Ship.get_ships("squad1hash")
+
+    IO.inspect(ships, label: "ships:")
+
+    assert Enum.count(ships) == 3
+  end
 end

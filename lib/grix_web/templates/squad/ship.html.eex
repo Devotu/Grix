@@ -1,0 +1,61 @@
+<section>
+  <h3>
+    <%= @ship.name %>: <%= @ship.points %>
+  </h3>
+  
+  <%= for pilot <- Enum.filter(@ship.upgrades, &(&1.type == "pilot")) do %>
+    <h4>
+      Ship (pilot): <%= pilot.name  %> <%= @ship.points %>
+    </h4>
+  <% end %>
+
+  
+  <%= if(@ship.upgrades != nil) do%>
+    <%= for modification <- Enum.filter(@ship.upgrades, &(&1.type == "modification")) do %>
+      <h5>
+        Modification: <%= modification.name %> <%= modification.points%>
+      </h5>
+    <% end %>
+    <%= for sensor <- Enum.filter(@ship.upgrades, &(&1.type == "sensor")) do %>
+      <h5>
+        Sensor: <%= sensor.name %>  <%= sensor.guid.points %>
+      </h5>
+    <% end %>
+    <%= for forcepower <- Enum.filter(@ship.upgrades, &(&1.type == "forcepower")) do %>
+      <h5>
+        Force: <%= forcepower.name %> <%= forcepower.points %>
+      </h5>
+    <% end %>
+    <%= for talent <- Enum.filter(@ship.upgrades, &(&1.type == "talent")) do %>
+      <h5>
+        Talent: <%= talent.name %> <%= talent.points %>
+      </h5>
+    <% end %>
+    <%= for crew <- Enum.filter(@ship.upgrades, &(&1.type == "crew")) do %>
+      <h5>
+        Crew: <%= crew.name %> <%= crew.points %>
+      </h5>
+    <% end %>
+    <%= for torpedo <- Enum.filter(@ship.upgrades, &(&1.type == "torpedo")) do %>
+      <h5>
+        Torpedo: <%= torpedo.name %> <%= torpedo.points %>
+      </h5>
+    <% end %>
+    <%= for device <- Enum.filter(@ship.upgrades, &(&1.type == "device")) do %>
+      <h5>
+        Device: <%= device.name %> <%= device.points %>
+      </h5>
+    <% end %>
+    <%= for illicit <- Enum.filter(@ship.upgrades, &(&1.type == "illicit")) do %>
+      <h5>
+        Device: <%= illicit.name %> <%= illicit.points %>
+      </h5>
+    <% end %>
+    <%= for gunner <- Enum.filter(@ship.upgrades, &(&1.type == "gunner")) do %>
+      <h5>
+        Device: <%= gunner.name %> <%= gunner.points %>
+      </h5>
+    <% end %>
+  <% end %>
+
+</section>

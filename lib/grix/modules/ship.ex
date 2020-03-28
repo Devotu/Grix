@@ -104,4 +104,34 @@ defmodule Grix.Ship do
       _ -> {:error, :unknown_error}
     end
   end
+
+
+  def get_ships(squad_id) do
+    query = """
+    MATCH
+      (sq:Squad)
+      -[:Includes]->(s:Ship)
+    WHERE
+      sq.id = "#{squad_id}"
+    RETURN
+      {
+        id: s.id,
+        name: s.name
+      } AS ship
+    """
+
+    Database.get(query)
+    |> nodes_to_ships
+    |> Helpers.return_as_tuple()
+  end
+
+  #Helpers
+  defp nodes_to_ships(nodes) do
+    Enum.map(nodes, &node_to_ship/1)
+  end
+
+  defp node_to_ship(node) do
+    IO.inspect(node, label: "node")
+    struct(Ship, Helpers.atomize_keys(node["ship"]))
+  end
 end

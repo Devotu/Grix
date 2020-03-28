@@ -6,6 +6,14 @@
   <p><b>XWS:</b> <%= @squad.xws %>
 </section>
 <section>
+  <label>
+    Ships
+  </label>
+  <%= for ship <- @squad.ships do %>
+    <%= render(GrixWeb.SquadView, "ship.html", %{ship: ship}) %>
+  <% end %>
+</section>
+<section>
   <%= if(Map.has_key?(@conn.assigns, :stats)) do %>
   <h4>Score</h4>
   <p><b>Average:</b> <%= @stats.average %>
