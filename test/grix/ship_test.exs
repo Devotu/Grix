@@ -29,7 +29,7 @@ defmodule Grix.ShipTest do
 
 
   test "get ships" do
-    {:ok, ships} = Ship.get_ships("squad1hash")
+    {:ok, ships} = Ship.get_ships_in_squad("squad1hash")
 
     IO.inspect(ships, label: "ships:")
 

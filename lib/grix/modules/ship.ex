@@ -106,7 +106,7 @@ defmodule Grix.Ship do
   end
 
 
-  def get_ships(squad_id) do
+  def get_ships_in_squad(squad_id) do
     query = """
     MATCH
       (sq:Squad)
