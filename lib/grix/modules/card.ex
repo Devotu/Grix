@@ -155,4 +155,25 @@ defmodule Grix.Card do
   def write_persist_create(%Card{} = c) do
     "(s)-[:Use {points: #{c.points}}]->(#{c.id})"
   end
+
+
+  def get_cards_for_ship(ship_id) do
+
+    query = """
+    MATCH
+      (s:Ship)-[:Use]->(c:Card)
+    WHERE
+      s.id = "#{ship_id}"
+    RETURN
+      {
+        id: c.id,
+        name: c.name,
+        tags: labels(c)
+      } AS card
+    """
+
+    Database.get(query)
+    |> nodes_to_cards
+    |> Helpers.return_as_tuple()
+  end
 end
