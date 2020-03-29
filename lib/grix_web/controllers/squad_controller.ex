@@ -6,8 +6,10 @@ defmodule GrixWeb.SquadController do
   alias Grix.Game
   alias Grix.Faction
   alias Grix.Archetype
-  alias Grix.XWS
+  alias Grix.Ship
+  alias Grix.Card
   alias Grix.Helpers.Html
+  alias Grix.Helpers.General, as: Helpers
 
   def new(conn, _params) do
     {:ok, factions} = Faction.list()
@@ -40,9 +42,21 @@ defmodule GrixWeb.SquadController do
       {:ok, squad} ->
         {:ok, average} = Score.squad_average(squad_id)
         {:ok, win_percent} = Game.squad_win_percentage(squad_id)
+        {:ok, ships} = Ship.get_ships_in_squad(squad_id)
+
+        upgraded_ships = ships
+        |> Enum.map(fn s -> {s, Card.get_cards_for_ship(s.id)} end)
+        |> IO.inspect(label: "1: ")
+        |> Enum.map(fn {s, cr} -> {s, Helpers.without_ok(cr)} end)
+        |> IO.inspect(label: "2: ")
+        |> Enum.map(fn {s, cs} -> Ship.assign_upgrades(s, cs) end)
+        |> IO.inspect(label: "3: ")
+
+        IO.inspect(ships, label: "ships: \n")
+        {:ok, squad_with_ships} = Squad.assign_ships(squad, upgraded_ships)
 
         conn
-        |> assign(:squad, squad)
+        |> assign(:squad, squad_with_ships)
         |> assign(:stats, %{average: average, win_percent: win_percent})
         |> render("show.html")
       {:error, :not_found} ->
