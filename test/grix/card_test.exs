@@ -64,7 +64,7 @@ defmodule Grix.CardTest do
   test "get Cards for Ship" do
     {:ok, cards} = Card.get_cards_for_ship("ship2hash")
     assert Enum.count(cards, fn x -> x.name == "Brillian Evasion" end) == 0
-    assert Enum.count(cards, fn x -> x.name == "Crack Shot" end) == 1
-    assert Enum.count(cards, fn x -> x.name == "Red Squadron Veteran" end) == 1
+    assert Enum.count(cards, fn x -> x.name == "Crack Shot" && x.points == 1 end) == 1
+    assert Enum.count(cards, fn x -> x.name == "Red Squadron Veteran" && x.points == 41 end) == 1
   end
 end

@@ -161,14 +161,15 @@ defmodule Grix.Card do
 
     query = """
     MATCH
-      (s:Ship)-[:Use]->(c:Card)
+      (s:Ship)-[u:Use]->(c:Card)
     WHERE
       s.id = "#{ship_id}"
     RETURN
       {
         id: c.id,
         name: c.name,
-        tags: labels(c)
+        tags: labels(c),
+        points: u.points
       } AS card
     """
 
