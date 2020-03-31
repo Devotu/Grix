@@ -21,9 +21,9 @@
         Sensor: <%= sensor.name %>  <%= sensor.guid.points %>
       </h5>
     <% end %>
-    <%= for forcepower <- Enum.filter(@ship.upgrades, &(&1.type == "forcepower")) do %>
+    <%= for force <- Enum.filter(@ship.upgrades, &(&1.type == "force")) do %>
       <h5>
-        Force: <%= forcepower.name %> <%= forcepower.points %>
+        Force: <%= force.name %> <%= force.points %>
       </h5>
     <% end %>
     <%= for talent <- Enum.filter(@ship.upgrades, &(&1.type == "talent")) do %>
@@ -54,6 +54,11 @@
     <%= for gunner <- Enum.filter(@ship.upgrades, &(&1.type == "gunner")) do %>
       <h5>
         Device: <%= gunner.name %> <%= gunner.points %>
+      </h5>
+    <% end %>
+    <%= for astromech <- Enum.filter(@ship.upgrades, &(&1.type == "astromech")) do %>
+      <h5>
+        Astromech: <%= astromech.name %> <%= astromech.points %>
       </h5>
     <% end %>
   <% end %>
