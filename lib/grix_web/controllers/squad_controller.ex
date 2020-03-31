@@ -46,13 +46,9 @@ defmodule GrixWeb.SquadController do
 
         upgraded_ships = ships
         |> Enum.map(fn s -> {s, Card.get_cards_for_ship(s.id)} end)
-        |> IO.inspect(label: "1: ")
         |> Enum.map(fn {s, cr} -> {s, Helpers.without_ok(cr)} end)
-        |> IO.inspect(label: "2: ")
         |> Enum.map(fn {s, cs} -> Ship.assign_upgrades(s, cs) end)
-        |> IO.inspect(label: "3: ")
 
-        IO.inspect(ships, label: "ships: \n")
         {:ok, squad_with_ships} = Squad.assign_ships(squad, upgraded_ships)
 
         conn

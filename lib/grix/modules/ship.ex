@@ -40,8 +40,10 @@ defmodule Grix.Ship do
   def assign_upgrades(%Ship{} = ship, upgrades) do
     case upgrades_are_valid(ship, upgrades) do
       :ok ->
-        %{ship | :upgrades => upgrades}
-        |> assign_frame(upgrades)
+        ship
+        |> Map.put(:upgrades, upgrades)
+        |> assign_frame()
+        |> accumulate_points()
       _ ->
         {:error, :invalid_upgrades}
     end
@@ -53,8 +55,8 @@ defmodule Grix.Ship do
   end
 
 
-  defp assign_frame(%Ship{} = ship, upgrades) when is_list(upgrades) do
-    case find_frame(upgrades) do
+  defp assign_frame(%Ship{} = ship) do
+    case find_frame(ship.upgrades) do
       {:ok, frame} ->
         %{ship | :frame => frame.id}
       _ ->
@@ -68,6 +70,11 @@ defmodule Grix.Ship do
     |> Enum.filter(fn c -> c.type == "pilot" end)
     |> List.first()
     |> Card.find_frame()
+  end
+
+
+  defp accumulate_points(%Ship{} = ship) do
+    Map.put(ship, :points, count_points(ship))
   end
 
 
@@ -131,7 +138,6 @@ defmodule Grix.Ship do
   end
 
   defp node_to_ship(node) do
-    IO.inspect(node, label: "node")
     struct(Ship, Helpers.atomize_keys(node["ship"]))
   end
 end

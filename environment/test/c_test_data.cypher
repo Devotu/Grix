@@ -58,12 +58,12 @@ CREATE
   (s1)-[:Use {points: 41}]->(pilot),
   (s1)-[:Use {points: 1}]->(talent),
   (s1)-[:Use {points: 3}]->(astromech),
-  (s1)-[:Use {points: 3}]->(torpedo),
+  (s1)-[:Use {points: 9}]->(torpedo),
   (sq)-[:Includes]->(s2:Ship {id:"ship3hash", name:"Red Squadron Veteran", created:TIMESTAMP()}),
   (s2)-[:Use {points: 41}]->(pilot),
   (s2)-[:Use {points: 1}]->(talent),
   (s2)-[:Use {points: 3}]->(astromech),
-  (s2)-[:Use {points: 3}]->(torpedo);
+  (s2)-[:Use {points: 9}]->(torpedo);
 
 
 MATCH 
