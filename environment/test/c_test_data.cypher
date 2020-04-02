@@ -110,6 +110,18 @@ CREATE
   -[:With]->(sq),
   (s)-[:In]->(g);
 
+MATCH 
+  (s:Score), (s1:Ship), (s2:Ship), (s3:Ship)
+WHERE 
+  s.id = "score1hash"
+  AND s1.id = "ship1hash"
+  AND s2.id = "ship2hash"
+  AND s3.id = "ship3hash"
+CREATE
+  (s1)-[:Contributed {times: 6}]->(s),
+  (s2)-[:Contributed {times: 12}]->(s),
+  (s3)-[:Contributed {times: 3}]->(s);
+
 
 MATCH 
   (p:Player)
@@ -142,6 +154,20 @@ CREATE
   -[:With]->(sq),
   (s)-[:In]->(g);
 
+MATCH 
+  (s:Score), (s1:Ship), (s2:Ship), (s3:Ship)
+WHERE 
+  s.id = "score2hash"
+  AND s1.id = "ship1hash"
+  AND s2.id = "ship2hash"
+  AND s3.id = "ship3hash"
+CREATE
+  (s1)-[:Contributed {times: 7}]->(s),
+  (s2)-[:Contributed {times: 6}]->(s),
+  (s3)-[:Contributed {times: 8}]->(s);
+
+
+
 
 MATCH 
   (p:Player)
@@ -149,3 +175,37 @@ WHERE
   p.id = "player1hash"
 CREATE
   (p)-[:Registered]->(g:Game {id:"game3hash", created:TIMESTAMP()});
+
+
+
+
+MATCH 
+  (p:Player)
+WHERE 
+  p.id = "player1hash"
+CREATE
+  (p)-[:Registered]->(g:Game {id:"game4hash", created:TIMESTAMP()});
+
+MATCH 
+  (p:Player), (sq:Squad), (g:Game)
+WHERE 
+  p.id = "player1hash"
+  AND sq.id = "squad1hash"
+  AND g.id = "game4hash"
+CREATE
+  (p)-[:Got]->
+  (s:Score {id:"score5hash", points:80, created:TIMESTAMP()})
+  -[:With]->(sq),
+  (s)-[:In]->(g);
+
+MATCH 
+  (p:Player), (sq:Squad), (g:Game)
+WHERE 
+  p.id = "player2hash"
+  AND sq.id = "squad2hash"
+  AND g.id = "game4hash"
+CREATE
+  (p)-[:Got]->
+  (s:Score {id:"score6hash", points:102, created:TIMESTAMP()})
+  -[:With]->(sq),
+  (s)-[:In]->(g);
