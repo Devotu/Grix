@@ -2,9 +2,6 @@
   <h4>Welcome <%=@player.name%></h4>
   <ul>
     <li>
-      <%= button("New Squad", to: Routes.squad_path(@conn, :new), method: "get", class: "button border link-button") %>
-    </li>
-    <li>
       <%= button("New Squad XWS", to: Routes.xws_path(@conn, :new), method: "get", class: "button border link-button") %>
     </li>
     <li>
