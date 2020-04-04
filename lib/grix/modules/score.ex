@@ -25,7 +25,7 @@ defmodule Grix.Score do
     RETURN s.id AS id;
     """
 
-    Database.create(query, guid)
+    Database.create_and_return(query, guid)
   end
 
 

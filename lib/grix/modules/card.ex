@@ -18,7 +18,7 @@ defmodule Grix.Card do
       c.id AS id
     """
 
-    Database.create(query, id)
+    Database.create_and_return(query, id)
   end
 
   def create(name, category) do

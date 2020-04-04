@@ -103,7 +103,7 @@ defmodule Grix.Ship do
 
     query = match_q <> match_cards_q <> where_q <> where_cards_q <> create_q <> create_cards_q
 
-    response = Database.run(query)
+    response = Database.run_and_return(query)
 
     case response.stats["nodes-created"] do
       1 -> :ok
