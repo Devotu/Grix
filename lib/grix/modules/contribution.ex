@@ -3,7 +3,7 @@ defmodule Grix.Contribution do
   alias Grix.Helpers.Database
   alias Grix.Contribution
 
-  defstruct times: 0
+  defstruct score_id: "", ship_id: "", times: 0
 
 
   def add(score_id, ship_id, times) do
@@ -18,6 +18,49 @@ defmodule Grix.Contribution do
     """
 
     Database.run(query)
+  end
+
+  def add(score_id, contributions) when is_list(contributions) do
+
+    contributions_with_temp_id = Enum.map(contributions, fn c -> {Helpers.generate_lower_case_sequence(5), c} end)
+
+    match = contributions_with_temp_id
+    |> Enum.map_join(", ", fn {g,_c} -> write_add_match(g) end)
+    |> IO.inspect(label: "match")
+
+    where = contributions_with_temp_id
+    |> Enum.map_join(" AND ", fn {g,c} -> write_add_where(c, g) end)
+    |> IO.inspect(label: "where")
+
+    create = contributions_with_temp_id
+    |> Enum.map_join(", ", fn {g,c} -> write_add_create(c, g) end)
+    |> IO.inspect(label: "create")
+
+    query = """
+      MATCH
+        (s:Score), #{match}
+      WHERE
+        s.id = "#{score_id}"
+        AND #{where}
+      CREATE
+        #{create}
+      ;
+    """
+
+    Database.run(query)
+  end
+
+
+  def write_add_match(guid) do
+    "(#{guid}:Ship)"
+  end
+
+  def write_add_where(%Contribution{} = c, guid) do
+    "#{guid}.id = \"#{c.ship_id}\""
+  end
+
+  def write_add_create(%Contribution{} = c, guid) do
+    "(#{guid})-[:Contributed {times: #{c.times}}]->(s)"
   end
 
 

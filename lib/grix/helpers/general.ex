@@ -7,7 +7,7 @@ defmodule Grix.Helpers.General do
   end
 
 
-  defp generate_lower_case_sequence(len) do
+  def generate_lower_case_sequence(len) do
     1..len
     |> Enum.map( fn(_x) -> <<Enum.random(97..122)>> end )
     |> Enum.join
