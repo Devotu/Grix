@@ -37,6 +37,7 @@ defmodule GrixWeb.Router do
 
     get "/games/new", GameController, :new
     get "/games/:id", GameController, :show
+    post "/games/record", GameController, :record
     post "/games", GameController, :create
   end
 end

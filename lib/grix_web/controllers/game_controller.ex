@@ -7,6 +7,7 @@ defmodule GrixWeb.GameController do
   alias Grix.Squad
   alias Grix.Player
   alias Grix.Score
+  alias Grix.Ship
 
   alias Grix.Helpers.Html
 
@@ -27,6 +28,27 @@ defmodule GrixWeb.GameController do
       _ ->
         redirect(conn, to: Routes.login_path(conn, :show))
     end
+  end
+
+
+  def record(conn, params) do
+    {:ok, squad_1} = Squad.get(params["squad_1"])
+    {:ok, ships_1} = Ship.get_ships_in_squad(squad_1.id)
+    complete_squad_1 = Map.put(squad_1, :ships, ships_1)
+
+    {:ok, squad_2} = Squad.get(params["squad_2"])
+    {:ok, ships_2} = Ship.get_ships_in_squad(squad_2.id)
+    complete_squad_2 = Map.put(squad_2, :ships, ships_2)
+
+    {:ok, player_1} = Player.get(params["player_1"])
+    {:ok, player_2} = Player.get(params["player_2"])
+
+    conn
+    |> assign(:squad_1, complete_squad_1)
+    |> assign(:squad_2, complete_squad_2)
+    |> assign(:player_1, player_1)
+    |> assign(:player_2, player_2)
+    |> render("record.html")
   end
 
 

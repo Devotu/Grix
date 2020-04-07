@@ -1,0 +1,46 @@
+<section>
+  <%= form_for @conn, Routes.game_path(@conn, :create), fn f -> %>
+
+    <section>
+      <label>
+        Player: <%= @player_1.name %>
+      </label> 
+      <label>
+        Squad: <%= @squad_1.name %>
+      </label>
+      <label>
+        Points: <%= number_input f, :points_1 %>
+      </label> 
+    </section>
+    <section>
+      <label>
+        Ships
+      </label>
+      <%= for ship <- @squad_1.ships do %>
+        <%= render(GrixWeb.GameView, "ship.html", %{ship: ship, form: f}) %>
+      <% end %>
+    </section>
+
+    <section>
+      <label>
+        Player: <%= @player_2.name %>
+      </label>
+      <label>
+        Squad: <%= @squad_2.name %>
+      </label>
+      <label>
+        Points: <%= number_input f, :points_2 %>
+      </label> 
+    </section>
+    <section>
+      <label>
+        Ships
+      </label>
+      <%= for ship <- @squad_2.ships do %>
+        <%= render(GrixWeb.GameView, "ship.html", %{ship: ship, form: f}) %>
+      <% end %>
+    </section>
+
+    <%= submit("Register", class: "button border do submit") %>
+  <% end %>
+</section>
