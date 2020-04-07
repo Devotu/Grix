@@ -2,18 +2,18 @@
   <%= form_for @conn, Routes.game_path(@conn, :record), fn f -> %>
     <section>
       <label>
-        Player: <%= select(f, :player_1, @players) %>
+        Player: <%= select(f, :player_id_1, @players) %>
       </label>
       <label>
-        Squad: <%= select(f, :squad_1, @squads) %>
+        Squad: <%= select(f, :squad_id_1, @squads) %>
       </label>
     </section>
     <section>
       <label>
-        Player: <%= select(f, :player_2, @players) %>
+        Player: <%= select(f, :player_id_2, @players) %>
       </label>
       <label>
-        Squad: <%= select(f, :squad_2, @squads) %>
+        Squad: <%= select(f, :squad_id_2, @squads) %>
       </label>
     </section>
     <%= submit("Record", class: "button border do submit") %>

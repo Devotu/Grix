@@ -4,9 +4,11 @@
     <section>
       <label>
         Player: <%= @player_1.name %>
+        <%= hidden_input f, :player_id_1, [{:value, @player_1.id}] %>
       </label> 
       <label>
         Squad: <%= @squad_1.name %>
+        <%= hidden_input f, :squad_id_1 %>
       </label>
       <label>
         Points: <%= number_input f, :points_1 %>
@@ -24,9 +26,11 @@
     <section>
       <label>
         Player: <%= @player_2.name %>
+        <%= hidden_input f, :player_id_2, [{:value, @player_2.id}] %>
       </label>
       <label>
         Squad: <%= @squad_2.name %>
+        <%= hidden_input f, :squad_id_2 %>
       </label>
       <label>
         Points: <%= number_input f, :points_2 %>
