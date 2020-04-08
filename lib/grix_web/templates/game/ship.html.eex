@@ -2,5 +2,5 @@
   <h3>
     <%= @ship.name %> 
   </h3>
-  <%= number_input @form, @ship.id %>
+  <%= number_input @form, ("ship_" <> @squad <> "_" <> @ship.id) %>
 </section>

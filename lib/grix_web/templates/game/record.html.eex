@@ -19,7 +19,7 @@
         Ships
       </label>
       <%= for ship <- @squad_1.ships do %>
-        <%= render(GrixWeb.GameView, "ship.html", %{ship: ship, form: f}) %>
+        <%= render(GrixWeb.GameView, "ship.html", %{ship: ship, form: f, squad: "1"}) %>
       <% end %>
     </section>
 
@@ -41,7 +41,7 @@
         Ships
       </label>
       <%= for ship <- @squad_2.ships do %>
-        <%= render(GrixWeb.GameView, "ship.html", %{ship: ship, form: f}) %>
+        <%= render(GrixWeb.GameView, "ship.html", %{ship: ship, form: f, squad: "2"}) %>
       <% end %>
     </section>
 

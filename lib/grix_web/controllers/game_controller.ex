@@ -8,6 +8,7 @@ defmodule GrixWeb.GameController do
   alias Grix.Player
   alias Grix.Score
   alias Grix.Ship
+  alias Grix.Contribution
 
   alias Grix.Helpers.Html
 
@@ -53,12 +54,22 @@ defmodule GrixWeb.GameController do
 
 
   def create(conn, params) do
+
     {:ok, squad_1} = Squad.get(params["squad_id_1"])
     {:ok, squad_2} = Squad.get(params["squad_id_2"])
 
     {:ok, game_id} = Game.create(conn.assigns.player.id)
     {:ok, score_1_id} = Score.create(params["player_id_1"], params["squad_id_1"], game_id, params["points_1"])
     {:ok, score_2_id} = Score.create(params["player_id_2"], params["squad_id_2"], game_id, params["points_2"])
+    scores = %{"1" => score_1_id, "2" => score_2_id}
+
+    params
+    |> Enum.to_list()
+    |> Enum.filter(fn {k,_v} -> String.contains?(k, "ship_") end)
+    |> Enum.map(fn {k,times} -> String.split(k,"_") ++ [times] end)
+    |> Enum.map(fn [_param_identifier, squad, ship_id, times] -> %Contribution{score_id: scores[squad], ship_id: ship_id, times: times} end)
+    |> Enum.group_by(fn c -> c.score_id end)
+    |> Enum.map(fn {score_id, contributions} -> Contribution.add(score_id, contributions) end)
 
     {:ok, game} = Game.get(game_id)
     {:ok, score_1} = Score.get(score_1_id)

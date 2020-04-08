@@ -19,7 +19,7 @@ defmodule Grix.Helpers.Database do
   def run_and_return(query) do
     IO.inspect(query, label: "Running\n")
     Bolt.query!(Bolt.conn, query)
-    |> IO.inspect(label: "Result:\n")
+    # |> IO.inspect(label: "Result:\n")
   end
 
   def return_single_result_id(response) do
