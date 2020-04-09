@@ -19,3 +19,7 @@ CREATE (pu:PointsUpdate {id:"pointsupdate20192", name:"2019-2", enumeration:2 , 
 CREATE (pu:PointsUpdate {id:"pointsupdate20201", name:"2020-1", enumeration:3 , created:TIMESTAMP()});
 
 CREATE (p:Player:AI { id:"flycasual", name:"Fly Casual", created:TIMESTAMP(), email:"mail@mail.com", password:"FlyCasualPassword" });
+CREATE (p:Player { id:"otto", name:"Otto", created:TIMESTAMP(), email:"otto@otto.com", password:"Otto" });
+CREATE (p:Player { id:"topias", name:"Topias", created:TIMESTAMP(), email:"topias@topias.com", password:"Topias" });
+CREATE (p:Player { id:"markus", name:"Markus", created:TIMESTAMP(), email:"markus@markus.com", password:"Markus" });
+CREATE (p:Player { id:"rickard", name:"Rickard", created:TIMESTAMP(), email:"rickard@rickard.com", password:"Rickard" });
