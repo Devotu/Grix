@@ -19,13 +19,14 @@ defmodule GrixWeb.XWSController do
     case XWS.is_valid(params["xws"]) do
       :true ->
         {:ok, squad} = Squad.generate_from_xws(params["xws"])
-        translated_squad = XWS.translate_squad(squad)
+        translated_squad = squad
+          |> XWS.translate_squad()
+          |> Map.put(:archetype, params["archetype"])
         {:ok, squad_pid} = Agent.start_link(fn -> translated_squad end)
 
         conn
         |> put_session(:xws_squad_pid, squad_pid)
-        |> assign(:archetype, params["archetype"])
-        |> assign(:squad, squad)
+        |> assign(:squad, translated_squad)
         |> render("specify.html")
       {:error, msg} ->
         conn
