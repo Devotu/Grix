@@ -4,5 +4,5 @@ sh ./neo4j.sh
 echo "Waiting 5s"
 sleep 5s
 echo "Loading data"
-sh ./load_test_data.sh
+sh ./load_data.sh
 echo "Done"
