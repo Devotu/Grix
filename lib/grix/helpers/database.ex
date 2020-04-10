@@ -63,13 +63,15 @@ defmodule Grix.Helpers.Database do
 
   def generate_id(base) do
     base
-      |> String.replace(" ", "")
+      |> trim()
+      |> purgeNumbers()
       |> String.downcase()
   end
 
   def convert_to_label(base) do
     base
-      |> String.replace(" ", "")
+      |> trim()
+      |> purgeNumbers()
       |> String.replace("-", "")
       |> String.downcase()
       |> String.capitalize()
@@ -77,7 +79,8 @@ defmodule Grix.Helpers.Database do
 
   def convert_to_name(base) do
     base
-      |> String.capitalize()
+    |> recallNumbers()
+    |> String.capitalize()
   end
 
   def generate_in(list) do
@@ -90,5 +93,35 @@ defmodule Grix.Helpers.Database do
 
   defp enquote(string) do
     ~s("#{string}")
+  end
+
+  defp trim(string) do
+    String.replace(string, " ", "")
+  end
+
+  def purgeNumbers(string) do
+    string
+    |> String.replace("1", "one")
+    |> String.replace("2", "two")
+    |> String.replace("3", "three")
+    |> String.replace("4", "four")
+    |> String.replace("5", "five")
+    |> String.replace("6", "six")
+    |> String.replace("7", "seven")
+    |> String.replace("8", "eight")
+    |> String.replace("9", "nine")
+  end
+
+  def recallNumbers(string) do
+    string
+    |> String.replace("one", "1")
+    |> String.replace("two", "2")
+    |> String.replace("three", "3")
+    |> String.replace("four", "4")
+    |> String.replace("five", "5")
+    |> String.replace("six", "6")
+    |> String.replace("seven", "7")
+    |> String.replace("eight", "8")
+    |> String.replace("nine", "9")
   end
 end

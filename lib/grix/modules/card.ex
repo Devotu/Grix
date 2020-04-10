@@ -70,11 +70,13 @@ defmodule Grix.Card do
 
   def get_or_create_from_xws({category, ids}) when is_list(ids) do
     ids
+    |> Enum.map(fn id -> Database.generate_id(id) end)
     |> Enum.map(fn id -> get_or_create_from_xws(category, id) end)
     |> Enum.map(&Helpers.without_ok/1)
   end
 
   def get_or_create_from_xws(category, id) do
+    IO.inspect(id, label: "get card: ")
     case get(id) do
       {:ok, card} ->
         IO.inspect(card.name, label: "Card - Found: ")
