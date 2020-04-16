@@ -99,6 +99,7 @@ defmodule Grix.Score do
     average = scores
       |> Enum.map(&(&1.points))
       |> Calculator.average()
+      |> Float.round()
 
     {:ok, average}
   end

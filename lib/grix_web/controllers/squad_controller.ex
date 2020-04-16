@@ -25,8 +25,17 @@ defmodule GrixWeb.SquadController do
   def index(conn, _params) do
     case Squad.list() do
       {:ok, list} ->
+        expanded_list = list
+        |> Enum.map(fn(s) -> %{
+          squad: s,
+          average: Helpers.without_ok(Score.squad_average(s.id)),
+          wins: Helpers.without_ok(Game.squad_win_percentage(s.id))
+          }
+        end)
+        |> Enum.sort(&(&1.wins >= &2.wins))
+
         conn
-        |> assign(:squads, list)
+        |> assign(:squads, expanded_list)
         |> render("list.html")
       _ ->
         conn

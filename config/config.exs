@@ -29,6 +29,6 @@ import_config "#{Mix.env()}.exs"
 
 config :bolt_sips, Bolt,
   url: "bolt://localhost:7601",
-  basic_auth: [username: "neo4j", password: "neoLive"],
+  # basic_auth: [username: "neo4j", password: "neoLive"],
   basic_auth: [username: "neo4j", password: "neo600"],
   pool_size: 3

@@ -1,5 +1,6 @@
 <section>
-  <%= for squad <- @squads do %>
-    <p><b><%= squad.name %></b> (<%= squad.faction %>/<%= squad.archetype %>) <%= link "Show", to: Routes.squad_path(@conn, :show, squad.id) %>
+  <%= for s <- @squads do %>
+    <p><b><%= s.squad.name %></b> (<%= s.squad.faction %>/<%= s.squad.archetype %>) <%= link "Show", to: Routes.squad_path(@conn, :show, s.squad.id) %>
+    <p><%= s.wins %> : <%= s.average %>
   <% end %>
 </section>
