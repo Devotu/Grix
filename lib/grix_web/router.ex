@@ -20,6 +20,7 @@ defmodule GrixWeb.Router do
     get "/", MainController, :show
 
     get "/login", LoginController, :show
+    get "/logout", LoginController, :logout
     post "/login", LoginController, :login
 
     get "/main", MainController, :show

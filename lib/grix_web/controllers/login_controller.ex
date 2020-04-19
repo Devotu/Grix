@@ -8,7 +8,7 @@ defmodule GrixWeb.LoginController do
   end
 
   def login(conn, %{"username" => username, "password" => password}) do
-    case Player.login(username, password) do
+    case Player.validate_login_credentials(username, password) do
       {:ok, id} ->
         {:ok, player} = Player.get(id)
 
@@ -25,6 +25,13 @@ defmodule GrixWeb.LoginController do
         |> put_flash(:error, "Unknown error")
         |> redirect(to: Routes.login_path(conn, :show))
     end
+  end
+
+  def logout(conn, _params) do
+    conn
+    |> assign(:player, nil)
+    |> put_session(:player_id, nil)
+    |> redirect(to: Routes.login_path(conn, :show))
   end
 
 end

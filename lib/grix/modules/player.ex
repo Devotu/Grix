@@ -5,7 +5,7 @@ defmodule Grix.Player do
 
   defstruct id: "", name: ""
 
-  def login(username, password) do
+  def validate_login_credentials(username, password) do
     query = """
     MATCH
       (p:Player)
